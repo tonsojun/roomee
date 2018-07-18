@@ -6,7 +6,6 @@
 ## Sub-Heading ##
   > An app for posting or finding share houses and roommates in your area.
 
-
 ## Summary ##
   > This is a secure platform for homeowners, renters, and people looking to connect with others whilst live in a shared environment.
 
