@@ -1,12 +1,12 @@
-# Project Name
+# Roomee
 
-> Pithy project description
+> An app for posting or finding share houses and roommates in your area.
 
 ## Team
 
-  - __Product Owner__: teamMember
-  - __Scrum Master__: teamMember
-  - __Development Team Members__: teamMember, teamMember
+  - __Product Owner__: Anthony King
+  - __Scrum Master__: Andy Riesenbach
+  - __Development Team Members__: David Park, Ashleigh Kessel, Kalei Trujillo
 
 ## Table of Contents
 
