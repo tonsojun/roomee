@@ -22,7 +22,7 @@ sequelize.authenticate() 
 });
 
 //in package.json mysql might need to be mysql2
-
+//ahhhhh!
 
 module.exports.sequelize = sequelize;
 
