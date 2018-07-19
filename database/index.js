@@ -1,18 +1,25 @@
 const Sequelize = require('sequelize');
- const db = new Sequelize('roomee', 'user', null, { 
+
+
+ const sequelize = new Sequelize('roomee', 'root', null, { 
   host: 'localhost', 
-  dialect: 'mysql',  
+  port: 3000,
+  dialect: 'mysql'  ,
   pool: {
     max: 5, 
-    min: 0, 
+    min: 1, 
     acquire: 30000, 
-    idle: 10000 
+    idle: 1
   }
 });
 
-db.authenticate() 
-  .then(() => {  console.log('Connection has been established successfully.');  }) 
+//const db = new Sequelize('mysql://root:null@localhost:3000/roomee');
+
+sequelize.authenticate() 
+  .then(() => {  console.log('Connection has been established successfully.') }) 
   .catch(err => {  console.error('Unable to connect to the database:', err); 
 });
 
 //in package.json mysql might need to be mysql2
+
+module.exports.sequelize = sequelize;
