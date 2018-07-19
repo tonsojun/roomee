@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import SearchView from './searchView.jsx';
 import LoginView from './loginView.jsx';
-//import as needed: createListingView and houseListingView
+import {BrowserRouter as Router, Link, Route} from 'react-router-dom';
+import CreateListingView from './createListingView.jsx';
 
 
 
@@ -37,11 +38,23 @@ export default class App extends React.Component {
 
   render () {
     return (
-      <div className="app">
-        <h1>Roomie</h1>
-        <LoginView/>
-        <SearchView/>
-      </div>
+      <Router>
+        <div className="app">
+          <h1>Roomie</h1>
+          <Link to={'/createListing'}>
+            <h4>New Listing</h4>
+          </Link>
+          <LoginView/>
+          <div className="search">
+            <input type="text" value=""/>
+            <Link to={'/search'}>
+              <button type="submit">Search</button>
+            </Link>
+          </div>
+          <Route path='/search' component={SearchView} />
+          <Route path='/createListing' component={CreateListingView} />
+        </div>
+      </Router>
       )
   }
 
