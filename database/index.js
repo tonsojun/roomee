@@ -1,9 +1,10 @@
 const Sequelize = require('sequelize');
+const mysql = require('mysql2');
 
-
+//DATABASE AND SERVER HAVE TO BE RUNNING ON SEPARATE PORTS!!!
+//USE HAVE TO USE DEFAULT PORT FOR MYSQL,IF YOU WANT TO CHANGE IT, IT CANNOT BE CHANGED VIA CONFIF, GOOGLE  IT!!!
  const sequelize = new Sequelize('roomee', 'root', null, { 
   host: 'localhost', 
-  port: 3000,
   dialect: 'mysql'  ,
   pool: {
     max: 5, 
@@ -22,4 +23,6 @@ sequelize.authenticate() 
 
 //in package.json mysql might need to be mysql2
 
+
 module.exports.sequelize = sequelize;
+
