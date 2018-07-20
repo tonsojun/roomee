@@ -11,7 +11,25 @@ export default class App extends React.Component {
     this.state = {
       // set state here for entire app
       // we need to look into redux
-      term: ''
+      term: '',
+      listings: [{
+        id: 1,
+        title: 'Sample',
+        city: 'Sample',
+        zipcode: '95762',
+        address: 'Sample',
+        description: 'Sample',
+        price: 1000
+      },
+      {
+        id: 2,
+        title: 'Sample2',
+        city: 'Sample2',
+        zipcode: '96819',
+        address: 'Sample2',
+        description: 'Sample2',
+        price: 1000
+      }]
     };
   }
   /*  ******** Ajax Requests **********/
@@ -30,15 +48,18 @@ export default class App extends React.Component {
 
   render () {
     const { term } = this.state.term;
+    const { listings } = this.state.listings;
 
     const renderSearchView = (props) => {
       return (
         <SearchView
-          value={term}
+          value={this.state.term}
+          listings={this.state.listings}
           // {...props}
         />
       );
     }
+
     return (
       <Router>
         <div className="app">
