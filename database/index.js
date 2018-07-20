@@ -21,6 +21,90 @@ sequelize.authenticate() 
   .catch(err => {  console.error('Unable to connect to the database:', err); 
 });
 
+const User = sequelize.define('User', {
+  id: {
+    allowNull: false,
+    autoIncrement: true,
+    primaryKey: true,
+    type: Sequelize.INTEGER
+  },
+  firstName: {
+    type: Sequelize.STRING
+  },
+  lastName: {
+    type: Sequelize.STRING
+  },
+  userName: {
+    type: Sequelize.STRING
+  },
+  password: {
+    type: Sequelize.STRING
+  }
+});
+//is this necessary? we are using passport
+
+// force: true will drop the table if it already exists
+User.sync({force: true}).then(() => {
+  // Table created
+  return User.create({
+    firstName: 'Sample',
+    lastName: 'Sample',
+    userName: 'Sample',
+    password: 'Sample'
+  });
+});
+
+// use Sequalize file for adding photos to database
+const Listing = sequelize.define('Listing', {
+  id: {
+    allowNull: false,
+    autoIncrement: true,
+    primaryKey: true,
+    type: Sequelize.INTEGER
+  },
+  title: {
+    type: Sequelize.STRING
+  },
+  city: {
+    type: Sequelize.STRING
+  },
+  address: {
+    type: Sequelize.STRING
+  },
+  description: {
+    type: Sequelize.STRING
+  },
+  price: {
+    type: Sequelize.INTEGER
+  }
+});
+
+// force: true will drop the table if it already exists
+Listing.sync({force: true}).then(() => {
+  // Table created
+  return Listing.create({
+    title: 'Sample',
+    city: 'Sample',
+    address: 'Sample',
+    description: 'Sample',
+    price: 1
+  });
+});
+
+// creates a listingId attribute to User
+User.belongsTo(Listing);
+
+
+
+
+
+
+
+
+
+
+
+
 //in package.json mysql might need to be mysql2
 //ahhhhh!
 
