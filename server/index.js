@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // for parsing multipart/form-data
 app.use(bodyParser.json());
 
-app.get('/', (req, res) => {
+app.get('/search/get', (req, res) => {
   res.send('Hello World!');
 });
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import $ from 'jquery';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
+import axios from 'axios';
 import SearchView from './searchView.jsx';
 import LoginView from './loginView.jsx';
 import CreateListingView from './createListingView.jsx';
@@ -34,31 +35,47 @@ export default class App extends React.Component {
   }
   /*  ******** Ajax Requests **********/
 
-  // ajax here?
+  onSearch () {
+    axios.get('/search/get', {
+      data: {
+        term: this.state.term
+      }
+    })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   /*  ******** Ajax Requests **********/
 
   /* ******** Helpers and Events **********/
 
-  // helper functions/ event functions here?
+  onInput (e) {
+    this.setState({
+      term: e.target.value
+    });
+  }
 
   /* ******** Helpers and Events **********/
 
   /* ******** Render **********/
 
   render () {
-    const { term } = this.state.term;
-    const { listings } = this.state.listings;
 
-    const renderSearchView = (props) => {
+    const renderSearchView = (props) =>{
       return (
         <SearchView
+          onInput={this.onInput.bind(this)}
           value={this.state.term}
           listings={this.state.listings}
+          onSearch={this.onSearch.bind(this)}
           // {...props}
         />
       );
-    }
+    };
 
     return (
       <Router>
