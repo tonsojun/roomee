@@ -90,16 +90,11 @@ body {
 }
 
 
-.search-div, .search-result-view {
+.search-div, .search-result {
   display: flex;
   justify-content: center;
-  text-align: center;
-  margin: 50px 50px;
-}
-
-.search-result-view {
-  align-content: left;
-  margin: 10px;
+  /*text-align: center;*/
+  margin: 50px 0px 50px 50px;
 }
 
 .login {
