@@ -30,6 +30,15 @@ export default class App extends React.Component {
 
   render () {
     const { term } = this.state.term;
+
+    const renderSearchView = (props) => {
+      return (
+        <SearchView
+          value={term}
+          // {...props}
+        />
+      );
+    }
     return (
       <Router>
         <div className="app">
@@ -37,22 +46,17 @@ export default class App extends React.Component {
           Roomie
           </h1>
           <Link to="/createListing" style={{ textDecoration: 'none', color: '#888' }}>
-            <h4 className="create-listing">
+            <h4 className="link">
             New Listing
             </h4>
           </Link>
           <LoginView />
-          <div className="search-div">
-            <div className="search">
-              <input className="input-bar" type="text" value={term} style={{ textAlign: 'center' }} placeholder="Location, City, Address" />
-              <Link to="/search">
-                <button style={{ textAlign: 'center' }} className="search-button" type="submit">
-                Search
-                </button>
-              </Link>
-            </div>
-          </div>
-          <Route path="/search" component={SearchView} />
+          <Link to="/search" style={{ textDecoration: 'none', color: '#888' }}>
+            <h4 className="link">
+            Search
+            </h4>
+          </Link>
+          <Route path="/search" render={renderSearchView} />
           <Route path="/createListing" component={CreateListingView} />
         </div>
       </Router>
