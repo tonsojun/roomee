@@ -89,12 +89,17 @@ body {
     outline: none;
 }
 
-.search-div {
+
+.search-div, .search-result-view {
   display: flex;
   justify-content: center;
   text-align: center;
   margin: 50px 50px;
-  /*position: fixed;*/
+}
+
+.search-result-view {
+  align-content: left;
+  margin: 10px;
 }
 
 .login {
@@ -103,6 +108,3 @@ body {
   margin: 10px;
 }
 
-.create-listing {
-  margin: 10px;
-}

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const SearchResultView = () => (
-  <div>
+  <div className="search-result">
     <h4>
     Search result
     </h4>
