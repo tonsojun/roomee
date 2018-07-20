@@ -15,20 +15,20 @@ export default class App extends React.Component {
       term: '',
       listings: [{
         id: 1,
-        title: 'Sample',
-        city: 'Sample',
+        title: 'room for rent',
+        city: 'Sacramento',
         zipcode: '95762',
-        address: 'Sample',
-        description: 'Sample',
+        address: '123 Leaf Lane',
+        description: 'clean single room available',
         price: 1000
       },
       {
         id: 2,
-        title: 'Sample2',
-        city: 'Sample2',
+        title: 'room for rent',
+        city: 'Los Angeles',
         zipcode: '96819',
-        address: 'Sample2',
-        description: 'Sample2',
+        address: '1234 Leaf Lane',
+        description: 'clean single room available',
         price: 1000
       }]
     };
