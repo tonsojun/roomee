@@ -1,6 +1,6 @@
 import React from 'react';
 import $ from 'jquery';
-import {BrowserRouter as Router, Link, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 import SearchView from './searchView.jsx';
 import LoginView from './loginView.jsx';
 import CreateListingView from './createListingView.jsx';
