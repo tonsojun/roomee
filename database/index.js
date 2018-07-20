@@ -1,8 +1,8 @@
 const Sequelize = require('sequelize');
-const mysql = require('mysql2');
+// const mysql = require('mysql2');
 
-//DATABASE AND SERVER HAVE TO BE RUNNING ON SEPARATE PORTS!!!
-//USE HAVE TO USE DEFAULT PORT FOR MYSQL,IF YOU WANT TO CHANGE IT, IT CANNOT BE CHANGED VIA CONFIF, GOOGLE  IT!!!
+// DATABASE AND SERVER HAVE TO BE RUNNING ON SEPARATE PORTS!!!
+// USE DEFAULT PORT FOR MYSQL
  const sequelize = new Sequelize('roomee', 'root', null, { 
   host: 'localhost', 
   dialect: 'mysql'  ,
@@ -14,12 +14,9 @@ const mysql = require('mysql2');
   }
 });
 
-//const db = new Sequelize('mysql://root:null@localhost:3000/roomee');
-
 sequelize.authenticate() 
-  .then(() => {  console.log('Connection has been established successfully.') }) 
-  .catch(err => {  console.error('Unable to connect to the database:', err); 
-});
+  .then(() => console.log('Connection has been established successfully.')) 
+  .catch(err => console.error('Unable to connect to the database:', err));
 
 const User = sequelize.define('User', {
   id: {
@@ -28,31 +25,23 @@ const User = sequelize.define('User', {
     primaryKey: true,
     type: Sequelize.INTEGER
   },
-  firstName: {
-    type: Sequelize.STRING
-  },
-  lastName: {
-    type: Sequelize.STRING
-  },
-  userName: {
-    type: Sequelize.STRING
-  },
-  password: {
-    type: Sequelize.STRING
-  }
+  firstName: { type: Sequelize.STRING },
+  lastName: { type: Sequelize.STRING },
+  userName: { type: Sequelize.STRING },
+  password: { type: Sequelize.STRING }
 });
 //is this necessary? we are using passport
 
 // force: true will drop the table if it already exists
-User.sync({force: true}).then(() => {
+User.sync({force: true}).then(() =>
   // Table created
   return User.create({
     firstName: 'Sample',
     lastName: 'Sample',
     userName: 'Sample',
     password: 'Sample'
-  });
-});
+  })
+);
 
 // use Sequalize file for adding photos to database
 const Listing = sequelize.define('Listing', {
@@ -80,7 +69,7 @@ const Listing = sequelize.define('Listing', {
 });
 
 // force: true will drop the table if it already exists
-Listing.sync({force: true}).then(() => {
+Listing.sync({force: true}).then(() =>
   // Table created
   return Listing.create({
     title: 'Sample',
@@ -88,25 +77,10 @@ Listing.sync({force: true}).then(() => {
     address: 'Sample',
     description: 'Sample',
     price: 1
-  });
-});
+  })
+);
 
 // creates a listingId attribute to User
 User.belongsTo(Listing);
 
-
-
-
-
-
-
-
-
-
-
-
-//in package.json mysql might need to be mysql2
-//ahhhhh!
-
 module.exports.sequelize = sequelize;
-
