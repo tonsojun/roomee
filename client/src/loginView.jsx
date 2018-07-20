@@ -1,7 +1,7 @@
 import React from 'react';
 
 const LoginView = () => (
-  <div>
+  <div className="login">
     <h4>
     Login here
     </h4>

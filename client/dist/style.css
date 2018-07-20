@@ -55,6 +55,54 @@ Custom Styles
 */
 
 body {
+  color: #888;
+  font: 300 16px/22px "Karla", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background: yellow;
+}
+
+.title {
+  font-size: 42px;
+  margin-top: 10px;
+}
+
+
+.search-button {
+  font: bold 16px/22px "Karla", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  border: 0.30rem solid #888;
+  background-color:yellow;
+  color: #888;
+  height:31px;
+  width: 150px;
+}
+
+.input-bar {
   background-color: #888;
-  font: 300 16px/22px "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  border:none;
+  border-bottom: solid #888;
+  color: yellow;
+  height: 26px;
+  font-size: 22px;
+  width: 350px;
+}
+
+*:focus {
+    outline: none;
+}
+
+.search-div {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin: 50px 50px;
+  /*position: fixed;*/
+}
+
+.login {
+  display: flex-end;
+  justify-content: right;
+  margin: 10px;
+}
+
+.create-listing {
+  margin: 10px;
 }
