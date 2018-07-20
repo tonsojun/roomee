@@ -1,65 +1,59 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import $ from 'jquery';
+import {BrowserRouter as Router, Link, Route} from 'react-router-dom';
 import SearchView from './searchView.jsx';
 import LoginView from './loginView.jsx';
-import {BrowserRouter as Router, Link, Route} from 'react-router-dom';
 import CreateListingView from './createListingView.jsx';
-
-
 
 export default class App extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      //set state here for entire app
-      //we need to look into redux
-    }
-
-
+      // set state here for entire app
+      // we need to look into redux
+    };
   }
-/********* Ajax Requests **********/
+  /*  ******** Ajax Requests **********/
 
-  //ajax here?
+  // ajax here?
 
-/********* Ajax Requests **********/
+  /*  ******** Ajax Requests **********/
 
+  /* ******** Helpers and Events **********/
 
+  // helper functions/ event functions here?
 
-/********* Helpers **********/
+  /* ******** Helpers and Events **********/
 
-  //helper functions/ event functions here?
-
-/********* Helpers **********/
-
-
-
-/********* Render **********/
+  /* ******** Render **********/
 
   render () {
     return (
       <Router>
         <div className="app">
-          <h1>Roomie</h1>
-          <Link to={'/createListing'}>
-            <h4>New Listing</h4>
+          <h1>
+          Roomie
+          </h1>
+          <Link to="/createListing">
+            <h4>
+            New Listing
+            </h4>
           </Link>
-          <LoginView/>
+          <LoginView />
           <div className="search">
-            <input type="text" value=""/>
-            <Link to={'/search'}>
-              <button type="submit">Search</button>
+            <input type="text" value="" />
+            <Link to="/search">
+              <button type="submit">
+              Search
+              </button>
             </Link>
           </div>
-          <Route path='/search' component={SearchView} />
-          <Route path='/createListing' component={CreateListingView} />
+          <Route path="/search" component={SearchView} />
+          <Route path="/createListing" component={CreateListingView} />
         </div>
       </Router>
-      )
+    );
   }
 
-/********* Render **********/
-
-
-
+  /* ******** Render **********/
 }

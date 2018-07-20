@@ -1,13 +1,13 @@
 import React from 'react';
+import SearchResultView from './searchResultView.jsx';
 
-export default class SearchView extends React.Component {
-  render () {
-    return (
-      <div>
-      <h4>Search results here</h4>
+const SearchView = () => (
+  <div>
+    <h4>
+    Search results here
+    </h4>
+    <SearchResultView />
+  </div>
+);
 
-      </div>
-      )
-  }
-
-}
+export default SearchView;
