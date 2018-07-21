@@ -33,23 +33,25 @@ export default class App extends React.Component {
       }]
     };
   }
-  /*  ******** Ajax Requests **********/
+  /*  ******** axios Requests **********/
 
-  onSearch () {
-    axios.get('/search/get', {
-      data: {
-        term: this.state.term
-      }
-    })
-      .then((response) => {
-        console.log(response);
+  onSearch (event) {
+    event.preventDefault();
+    const term = {
+      term: this.state.term
+    };
+    axios.post('/search/get', {params:term} )
+      .then((res) => {
+        console.log(res.data);
+        //link to get request so that data is objservable
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((err) => {
+        console.log(err);
       });
   }
 
-  /*  ******** Ajax Requests **********/
+
+  /*  ******** axios Requests **********/
 
   /* ******** Helpers and Events **********/
 
