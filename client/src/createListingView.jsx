@@ -1,8 +1,9 @@
 import React from 'react';
+import Dropzone from 'react-dropzone';
 
 class CreateListingView extends React.Component {
-  constructor ({ handleCreateListingButtonClick }) {
-    super({ handleCreateListingButtonClick });
+  constructor (props) {
+    super(props);
     this.state = {
       title: '',
       address: '',
@@ -13,6 +14,8 @@ class CreateListingView extends React.Component {
       photos: []
     };
     this.onChange = this.onChange.bind(this);
+    this.onDrop = this.onDrop.bind(this);
+
     const {
       title, state, address, city, zipCode, price, descriptionTextbox, photos
     } = this.state;
@@ -22,6 +25,17 @@ class CreateListingView extends React.Component {
     const change = {};
     change[event.target.id] = event.target.value;
     this.setState(change);
+    setTimeout(() => {
+      console.log(this.state);
+    }, 1000);
+  }
+
+  onDrop (file) {
+    this.state.photos.push(file);
+    // will currenty accept more than five photos, refactor after mvp
+    this.setState({
+      photos: this.state.photos
+    });
   }
 
   render () {
@@ -42,11 +56,43 @@ class CreateListingView extends React.Component {
         <input id="price" size="4" value={this.price} onChange={this.onChange} />
         Description:
         <input id="descriptionTextbox" value={this.description} onChange={this.onChange} />
-        Upload Photos:   //TODO
+
+        <section>
+          <div className="dropzone">
+            <Dropzone
+              onDrop={this.onDrop}
+              accept="image/jpeg, image/png"
+              maxSize={5242880}
+            >
+              <p>
+              Add up to 5 images
+              </p>
+            </Dropzone>
+          </div>
+          <aside>
+            <h2>
+            Dropped files
+            </h2>
+            <ul>
+              {
+                this.state.photos.map((f) => {
+                  console.log(f.name);
+                  // this is very odd, the line above correctly display the file name, but
+                  <li key={f[0].name}>
+                    {f[0].name} - {f[0].size} bytes
+                  </li>
+                  // the line above is not rendering ANYTHING
+                  // the photos are being saved  however, so come back to this post-MVP
+                })
+              }
+            </ul>
+          </aside>
+        </section>
+
         <button
           type="submit"
           onClick={() => {
-            this.handleCreateListingButtonClick(this.state);
+            this.onSubmit(this.state);
           }}
         >
           Create Listing
