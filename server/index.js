@@ -13,9 +13,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // for parsing application/x-www-form-urlencode app.use(multer());
 // for parsing multipart/form-data
 
-app.post('/search/get', (req, res) => {
-  console.log('req from get in server', req.body)
-  res.end('Hello World!');
+app.get('/search', (req, res) => {
+
+  let q = req.params('term')
+  console.log('req from get in server', q)
+
+  res.send('Hello World!');
 });
 
 app.listen(PORT, () => {

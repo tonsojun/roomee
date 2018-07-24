@@ -36,19 +36,21 @@ export default class App extends React.Component {
   /*  ******** axios Requests **********/
 
   onSearch (event) {
-    event.preventDefault();
-    const term = {
-      term: this.state.term
-    };
-    axios.post('/search/get', {params:term} )
+    // event.preventDefault();
+    const { term } = this.state;
+    axios.get('/search', { params: {term : term} })
       .then((res) => {
-        console.log(res.data);
-        //link to get request so that data is objservable
+        console.log( res, 'res data from onsearch client side');
+        //  is res.data or res an array?
+        this.setState({
+          listings : res.data
+        });
       })
       .catch((err) => {
         console.log(err);
       });
   }
+
 
 
   /*  ******** axios Requests **********/
