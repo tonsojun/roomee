@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // for parsing application/x-www-form-urlencode app.use(multer());
 // for parsing multipart/form-data
 
-// initialize passport and the express session and passport session
+// initialize passport and the express sessions and passport sessions
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 
