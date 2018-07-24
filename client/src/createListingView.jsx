@@ -1,8 +1,8 @@
 import React from 'react';
 
 class CreateListingView extends React.Component {
-  constructor ({ handleCreateListingButtonClick }) {
-    super({ handleCreateListingButtonClick });
+  constructor (props) {
+    super(props);
     this.state = {
       title: '',
       address: '',
@@ -46,7 +46,7 @@ class CreateListingView extends React.Component {
         <button
           type="submit"
           onClick={() => {
-            this.handleCreateListingButtonClick(this.state);
+            this.props.onSubmit(this.state);
           }}
         >
           Create Listing
