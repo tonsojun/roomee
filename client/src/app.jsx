@@ -10,9 +10,6 @@ export default class App extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      // set state here for entire app
-      // we need to look into redux
-      newListing: {},
       term: '',
       listings: [{
         id: 1,
@@ -33,7 +30,7 @@ export default class App extends React.Component {
         price: 1000
       }]
     };
-    this.onSubmit = this.onSubmit.bind(this);
+    this.onSubmitPost = this.onSubmitPost.bind(this);
   }
   /*  ******** axios Requests **********/
 
@@ -53,11 +50,8 @@ export default class App extends React.Component {
       });
   }
 
-  onSubmitPost (e) {
-    const { newListing } = this.state;
-    axios.post('/post', {
-      newListing
-    })
+  onSubmitPost (newListingData) {
+    axios.post('/post', newListingData)
     .then((res) => {
       console.log('res from creating new listing post', res)
     }).catch((err) => {
@@ -67,7 +61,6 @@ export default class App extends React.Component {
     });
   }
 
-
   /*  ******** axios Requests **********/
 
   /* ******** Helpers and Events **********/
@@ -76,15 +69,6 @@ export default class App extends React.Component {
     this.setState({
       term: e.target.value
     });
-  }
-
-  onSubmit (e) {
-    console.log('click', e.target.listing)
-    this.setState({
-      newListing: e.target.listing
-    }).then(() => {
-      this.onSubmitPost(e);
-    })
   }
 
   /* ******** Helpers and Events **********/
@@ -107,9 +91,8 @@ export default class App extends React.Component {
 
     const renderCreateListingView = (props) =>{
       return (
-        <SearchView
-          onInput={this.onSubmit.bind(this)}
-          value={this.state.newListing}
+        <CreateListingView
+          onSubmit={this.onSubmitPost}
           // {...props}
         />
       );
