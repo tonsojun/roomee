@@ -106,3 +106,17 @@ body {
 .create-listing {
   margin: 10px;
 }
+
+#create-listing {
+  margin-left: 10px;
+}
+
+#create-listing input {
+  display: block;
+}
+
+#descriptionTextbox {
+  width: 250px;
+  height: 80px;
+  font-size: 14px;
+}
