@@ -104,19 +104,29 @@ export default class App extends React.Component {
           <h1 className="title">
           Roomie
           </h1>
+
           <Link to="/createListing" style={{ textDecoration: 'none', color: '#888' }}>
             <h4 className="link">
             New Listing
             </h4>
           </Link>
-          <LoginView />
+
+          <Link to="/loginView" style={{ textDecoration: 'none', color: '#888' }}>
+            <h4 className="link">
+            Login
+            </h4>
+          </Link>
+
           <Link to="/search" style={{ textDecoration: 'none', color: '#888' }}>
             <h4 className="link">
             Search
             </h4>
           </Link>
+
           <Route path="/search" render={renderSearchView} />
           <Route path="/createListing" render={renderCreateListingView} />
+          <Route path="/loginView" component={LoginView} />
+
         </div>
       </Router>
     );
