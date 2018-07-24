@@ -10,8 +10,6 @@ export default class App extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      // set state here for entire app
-      // we need to look into redux
       term: '',
       listings: [{
         id: 1,
@@ -32,24 +30,36 @@ export default class App extends React.Component {
         price: 1000
       }]
     };
+    this.onSubmitPost = this.onSubmitPost.bind(this);
   }
   /*  ******** axios Requests **********/
 
   onSearch (event) {
     event.preventDefault();
-    const term = {
-      term: this.state.term
-    };
-    axios.post('/search/get', {params:term} )
+    const { term } = this.state;
+    axios.get('/search', { params: {term : term} })
       .then((res) => {
-        console.log(res.data);
-        //link to get request so that data is objservable
+        console.log( res, 'res data from onsearch client side');
+        //  is res.data or res an array?
+        this.setState({
+          listings : res.data
+        });
       })
       .catch((err) => {
         console.log(err);
       });
   }
 
+  onSubmitPost (newListingData) {
+    axios.post('/post', newListingData)
+    .then((res) => {
+      console.log('res from creating new listing post', res)
+    }).catch((err) => {
+      if (err) {
+        throw err;
+      };
+    });
+  }
 
   /*  ******** axios Requests **********/
 
@@ -79,6 +89,15 @@ export default class App extends React.Component {
       );
     };
 
+    const renderCreateListingView = (props) =>{
+      return (
+        <CreateListingView
+          onSubmit={this.onSubmitPost}
+          // {...props}
+        />
+      );
+    };
+
     return (
       <Router>
         <div className="app">
@@ -97,7 +116,7 @@ export default class App extends React.Component {
             </h4>
           </Link>
           <Route path="/search" render={renderSearchView} />
-          <Route path="/createListing" component={CreateListingView} />
+          <Route path="/createListing" render={renderCreateListingView} />
         </div>
       </Router>
     );
