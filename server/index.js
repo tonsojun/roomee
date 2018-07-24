@@ -6,8 +6,8 @@ const db = require('../database/index.js');
 const PORT = process.env.PORT || 3000;
 
 const app = express();
-
-
+const passport = require('passport')
+const session = require('express-session')
 
 app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use(bodyParser.json());
@@ -15,6 +15,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 // for parsing application/x-www-form-urlencode app.use(multer());
 // for parsing multipart/form-data
+
+// initialize passport and the express session and passport session
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
 
 app.get('/search', (req, res) => {
   const searchTerm = null || req.param('term');
