@@ -1,6 +1,7 @@
 import React from 'react';
 import $ from 'jquery';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
+import axios from 'axios';
 import SearchView from './searchView.jsx';
 import LoginView from './loginView.jsx';
 import CreateListingView from './createListingView.jsx';
@@ -11,25 +12,73 @@ export default class App extends React.Component {
     this.state = {
       // set state here for entire app
       // we need to look into redux
-      term: ''
+      term: '',
+      listings: [{
+        id: 1,
+        title: 'room for rent',
+        city: 'Sacramento',
+        zipcode: '95762',
+        address: '123 Leaf Lane',
+        description: 'clean single room available',
+        price: 1000
+      },
+      {
+        id: 2,
+        title: 'room for rent',
+        city: 'Los Angeles',
+        zipcode: '96819',
+        address: '1234 Leaf Lane',
+        description: 'clean single room available',
+        price: 1000
+      }]
     };
   }
-  /*  ******** Ajax Requests **********/
+  /*  ******** axios Requests **********/
 
-  // ajax here?
+  onSearch (event) {
+    event.preventDefault();
+    const term = {
+      term: this.state.term
+    };
+    axios.post('/search/get', {params:term} )
+      .then((res) => {
+        console.log(res.data);
+        //link to get request so that data is objservable
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
-  /*  ******** Ajax Requests **********/
+
+  /*  ******** axios Requests **********/
 
   /* ******** Helpers and Events **********/
 
-  // helper functions/ event functions here?
+  onInput (e) {
+    this.setState({
+      term: e.target.value
+    });
+  }
 
   /* ******** Helpers and Events **********/
 
   /* ******** Render **********/
 
   render () {
-    const { term } = this.state.term;
+
+    const renderSearchView = (props) =>{
+      return (
+        <SearchView
+          onInput={this.onInput.bind(this)}
+          value={this.state.term}
+          listings={this.state.listings}
+          onSearch={this.onSearch.bind(this)}
+          // {...props}
+        />
+      );
+    };
+
     return (
       <Router>
         <div className="app">
@@ -37,22 +86,17 @@ export default class App extends React.Component {
           Roomie
           </h1>
           <Link to="/createListing" style={{ textDecoration: 'none', color: '#888' }}>
-            <h4 className="create-listing">
+            <h4 className="link">
             New Listing
             </h4>
           </Link>
           <LoginView />
-          <div className="search-div">
-            <div className="search">
-              <input className="input-bar" type="text" value={term} style={{ textAlign: 'center' }} placeholder="Location, City, Address" />
-              <Link to="/search">
-                <button style={{ textAlign: 'center' }} className="search-button" type="submit">
-                Search
-                </button>
-              </Link>
-            </div>
-          </div>
-          <Route path="/search" component={SearchView} />
+          <Link to="/search" style={{ textDecoration: 'none', color: '#888' }}>
+            <h4 className="link">
+            Search
+            </h4>
+          </Link>
+          <Route path="/search" render={renderSearchView} />
           <Route path="/createListing" component={CreateListingView} />
         </div>
       </Router>
