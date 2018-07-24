@@ -8,6 +8,7 @@ const app = express();
 
 app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use(bodyParser.json());
+
 app.use(bodyParser.urlencoded({ extended: true }));
 // for parsing application/x-www-form-urlencode app.use(multer());
 // for parsing multipart/form-data
