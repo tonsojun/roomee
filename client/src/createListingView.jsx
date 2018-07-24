@@ -92,7 +92,7 @@ class CreateListingView extends React.Component {
         <button
           type="submit"
           onClick={() => {
-            this.onSubmit(this.state);
+            this.props.onSubmit(this.state);
           }}
         >
           Create Listing

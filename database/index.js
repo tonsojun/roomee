@@ -35,7 +35,7 @@ const User = sequelize.define('User', {
 // force: true will drop the table if it already exists
 User.sync({force: true}).then(() =>
   // Table created
-  return User.create({
+  User.create({
     firstName: 'Sample',
     lastName: 'Sample',
     userName: 'Sample',
@@ -71,7 +71,7 @@ const Listing = sequelize.define('Listing', {
 // force: true will drop the table if it already exists
 Listing.sync({force: true}).then(() =>
   // Table created
-  return Listing.create({
+  Listing.create({
     title: 'Sample',
     city: 'Sample',
     address: 'Sample',
@@ -79,8 +79,19 @@ Listing.sync({force: true}).then(() =>
     price: 1
   })
 );
+Listing.findListings = (query, callback)=>
+  Listing.findAll()
+    .then(data => callback(null,data))
+    .catch(err => callback(err,null));
+
+Listing.createListing = (listing, callback)=>
+  Listing.create(listing)
+    .then(data => callback(null,data))
+    .catch(err => callback(err,null));
+
 
 // creates a listingId attribute to User
 User.belongsTo(Listing);
 
 module.exports.sequelize = sequelize;
+module.exports.Listing = Listing;
