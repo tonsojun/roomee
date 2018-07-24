@@ -12,6 +12,7 @@ export default class App extends React.Component {
     this.state = {
       // set state here for entire app
       // we need to look into redux
+      newListing: {},
       term: '',
       listings: [{
         id: 1,
@@ -32,11 +33,12 @@ export default class App extends React.Component {
         price: 1000
       }]
     };
+    this.onSubmit = this.onSubmit.bind(this);
   }
   /*  ******** axios Requests **********/
 
   onSearch (event) {
-    // event.preventDefault();
+    event.preventDefault();
     const { term } = this.state;
     axios.get('/search', { params: {term : term} })
       .then((res) => {
@@ -51,6 +53,19 @@ export default class App extends React.Component {
       });
   }
 
+  onSubmitPost (e) {
+    const { newListing } = this.state;
+    axios.post('/post', {
+      newListing
+    })
+    .then((res) => {
+      console.log('res from creating new listing post', res)
+    }).catch((err) => {
+      if (err) {
+        throw err;
+      };
+    });
+  }
 
 
   /*  ******** axios Requests **********/
@@ -61,6 +76,15 @@ export default class App extends React.Component {
     this.setState({
       term: e.target.value
     });
+  }
+
+  onSubmit (e) {
+    console.log('click', e.target.listing)
+    this.setState({
+      newListing: e.target.listing
+    }).then(() => {
+      this.onSubmitPost(e);
+    })
   }
 
   /* ******** Helpers and Events **********/
@@ -76,6 +100,16 @@ export default class App extends React.Component {
           value={this.state.term}
           listings={this.state.listings}
           onSearch={this.onSearch.bind(this)}
+          // {...props}
+        />
+      );
+    };
+
+    const renderCreateListingView = (props) =>{
+      return (
+        <SearchView
+          onInput={this.onSubmit.bind(this)}
+          value={this.state.newListing}
           // {...props}
         />
       );
@@ -99,7 +133,7 @@ export default class App extends React.Component {
             </h4>
           </Link>
           <Route path="/search" render={renderSearchView} />
-          <Route path="/createListing" component={CreateListingView} />
+          <Route path="/createListing" render={renderCreateListingView} />
         </div>
       </Router>
     );
