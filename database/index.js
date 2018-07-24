@@ -1,9 +1,10 @@
 const Sequelize = require('sequelize');
-// const mysql = require('mysql2');
-
 // DATABASE AND SERVER HAVE TO BE RUNNING ON SEPARATE PORTS!!!
 // USE DEFAULT PORT FOR MYSQL
- const sequelize = new Sequelize('roomee', 'root', null, { 
+
+// create the connection to database
+//if name is empty, you can create the db using sequelize
+ const sequelize = new Sequelize('roomie', 'root', null, { 
   host: 'localhost', 
   dialect: 'mysql'  ,
   pool: {
@@ -65,6 +66,12 @@ const Listing = sequelize.define('Listing', {
   },
   price: {
     type: Sequelize.INTEGER
+  },
+  zip: {
+    type: Sequelize.INTEGER
+  },
+  photos: {
+    type: Sequelize.STRING
   }
 });
 
@@ -76,7 +83,9 @@ Listing.sync({force: true}).then(() =>
     city: 'Sample',
     address: 'Sample',
     description: 'Sample',
-    price: 1
+    price: 1,
+    zip: 12345,
+    photo: 'sample.png',
   })
 );
 Listing.findListings = (query, callback)=>
