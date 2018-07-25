@@ -9,6 +9,10 @@ const PORT = process.env.PORT || 3000;
 
 const app = express();
 
+app.set('view engine', 'jade');
+
+
+
 app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use(bodyParser.json());
 
@@ -43,17 +47,20 @@ app.post('/listing', (req, res) => {
   });
 });
 
+
 // handlers for refresh button on all views
 // res.redirect('back') will take user back to homepage
-app.get('/loginView', (req, res) => {
-  res.redirect('localhost:3000/loginView');
-});
-
 app.get('/createListing', (req, res) => {
   res.redirect('localhost:3000/createListing');
 });
 
+app.get('/loginView', (req, res) => {
+  //res.render('loginView');
+  res.redirect('localhost:3000/loginView');
+});
+
 app.get('/search', (req, res) => {
+  //res.render('searchView');
   res.redirect('localhost:3000/search');
 });
 
