@@ -8,6 +8,8 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 const passport = require('passport')
 const session = require('express-session')
+const env = require('dotenv').load();
+const models = require("./client/models");
 
 app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use(bodyParser.json());
@@ -55,6 +57,15 @@ app.get('/createListing', (req, res) => {
 
 app.get('/search', (req, res) => {
   res.redirect('localhost:3000/search');
+});
+
+//Synced to roomee database
+models.sequelize.sync()
+.then(function() {
+   console.log('Database is working!')
+})
+.catch(function(err) {
+    console.log(err, "Database isn't working!")
 });
 
 app.listen(PORT, () => {
