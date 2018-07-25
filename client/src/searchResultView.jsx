@@ -10,7 +10,8 @@ const SearchResultView = ({listing, onTitleClick}) => (
       </h4>
     </Link>
     <div>
-      {listing.city}
+      <h4>{listing.city}</h4>
+      <h5>{listing.price}</h5>
     </div>
   </div>
 );

@@ -60,6 +60,11 @@ app.get('/loginView', (req, res) => {
   res.redirect('localhost:3000/loginView');
 });
 
+app.get('/house', (req, res) => {
+  //res.render('loginView');
+  res.redirect('localhost:3000/house');
+});
+
 app.get('/search', (req, res) => {
   //res.render('searchView');
   res.redirect('localhost:3000/search');
