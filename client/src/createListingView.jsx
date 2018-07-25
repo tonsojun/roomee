@@ -32,10 +32,12 @@ class CreateListingView extends React.Component {
 
   onDrop (file) {
     this.state.photos.push(file);
+    const photos = this.state.photos.slice(-5);
     // will currenty accept more than five photos, refactor after mvp
     this.setState({
-      photos: this.state.photos
+      photos: photos
     });
+    setTimeout(() => console.log(this.state.photos.length), 500);
   }
 
   render () {
@@ -77,7 +79,7 @@ class CreateListingView extends React.Component {
               {
                 this.state.photos.map((f) => {
                   console.log(f.name);
-                  // this is very odd, the line above correctly display the file name, but
+                  // this is very odd, the line above correctly displays the file name, but
                   <li key={f[0].name}>
                     {f[0].name} - {f[0].size} bytes
                   </li>
