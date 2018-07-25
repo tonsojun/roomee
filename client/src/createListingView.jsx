@@ -74,7 +74,7 @@ class CreateListingView extends React.Component {
   setRedirect () {
     this.setState({
       redirect: true
-    })
+    });
   }
 
   render () {
