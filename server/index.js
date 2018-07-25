@@ -24,7 +24,6 @@ app.get('/searchListing', (req, res) => {
   const searchTerm = null || req.param('term');
   console.log('req from get in server', searchTerm);
   db.Listing.findListings(searchTerm, (err, data) => {
-    console.log('server find resulted in ',data)
     if (err) {
       res.sendStatus(500);
     } else {
@@ -36,7 +35,6 @@ app.get('/searchListing', (req, res) => {
 app.post('/listing', (req, res) => {
   console.log('req from get in server', req.body);
   db.Listing.createListing(req.body, (err, result) => {
-    console.log('server create resulted in ',result);
     if (err) {
       res.sendStatus(500);
     } else {
