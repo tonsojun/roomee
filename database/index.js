@@ -75,10 +75,12 @@ Listing.findListings = (query, callback) =>
     .then(data => callback(null, data))
     .catch(err => callback(err, null));
 
-Listing.createListing = (listing, callback) =>
+Listing.createListing = (listing, callback) => {
+  // console.log('what the database is receiving:', listing);
   Listing.create(listing)
     .then(data => callback(null, data))
     .catch(err => callback(err, null));
+};
 
 // creates a listingId attribute to User
 User.belongsTo(Listing);

@@ -37,7 +37,8 @@ app.get('/searchListing', (req, res) => {
 });
 
 app.post('/listing', (req, res) => {
-  console.log('req from get in server', req.body);
+  // console.log('req from get in server', req.body);
+  delete req.body.photos;
   db.Listing.createListing(req.body, (err, result) => {
     if (err) {
       res.sendStatus(500);

@@ -47,14 +47,14 @@ export default class App extends React.Component {
 
   onSubmitPost (newListingData) {
     axios.post('/listing', newListingData)
-    .then((res) => {
-      console.log(`-------> Folowing data returned from server POST -> ${res}`)
-    })
-    .catch((err) => {
-      if (err) {
-        throw err;
-      };
-    });
+      .then((res) => {
+        // console.log(`-------> Folowing data returned from server POST -> ${res}`)
+      })
+      .catch((err) => {
+        if (err) {
+          throw err;
+        }
+      });
   }
 
   /*  ******** axios Requests **********/

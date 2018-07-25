@@ -38,9 +38,12 @@ class CreateListingView extends React.Component {
     const photos = this.state.photos.slice(-5);
     // will currenty accept more than five photos, refactor after mvp
     this.setState({
-      photos: photos
+      photo1: photos[0],
+      photo2: photos[1],
+      photo3: photos[2],
+      photo4: photos[3],
+      photo5: photos[4]
     });
-    setTimeout(() => console.log(this.state.photos.length), 500);
   }
 
   setRedirect () {
@@ -90,11 +93,10 @@ class CreateListingView extends React.Component {
             </h2>
             <ul>
               {
-                this.state.photos.map((f) => {
-                  console.log(f.name);
+                this.state.photos.map((f, i) => {
                   // this is very odd, the line above correctly displays the file name, but
                   <li key={f[0].name}>
-                    {f[0].name} - {f[0].size} bytes
+                   File {i}
                   </li>
                   // the line above is not rendering ANYTHING
                   // the photos are being saved  however, so come back to this post-MVP
