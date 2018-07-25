@@ -11,28 +11,23 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       term: '',
-      listings: [{
-        id: 1,
-        title: 'room for rent',
-        city: 'Sacramento',
-        zipcode: '95762',
-        address: '123 Leaf Lane',
-        description: 'clean single room available',
-        price: 1000
-      },
-      {
-        id: 2,
-        title: 'room for rent',
-        city: 'Los Angeles',
-        zipcode: '96819',
-        address: '1234 Leaf Lane',
-        description: 'clean single room available',
-        price: 1000
-      }]
+      listings: []
     };
     this.onSubmitPost = this.onSubmitPost.bind(this);
   }
   /*  ******** axios Requests **********/
+  componentDidMount() {
+    axios.get('/searchListing')
+      .then((res) => {
+        console.log('componentDidMount', res.data);
+        this.setState({
+          listings: res.data
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   onSearch (event) {
     event.preventDefault();
