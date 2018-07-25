@@ -37,9 +37,9 @@ export default class App extends React.Component {
   onSearch (event) {
     event.preventDefault();
     const { term } = this.state;
-    axios.get('/search', { params: {term : term} })
+    axios.get('/searchListing', { params: {term : term} })
       .then((res) => {
-        console.log( res, 'res data from onsearch client side');
+        console.log(`-------> Folowing data returned from server GET -> ${res}`);
         //  is res.data or res an array?
         this.setState({
           listings : res.data
@@ -51,10 +51,11 @@ export default class App extends React.Component {
   }
 
   onSubmitPost (newListingData) {
-    axios.post('/post', newListingData)
+    axios.post('/listing', newListingData)
     .then((res) => {
-      console.log('res from creating new listing post', res)
-    }).catch((err) => {
+      console.log(`-------> Folowing data returned from server POST -> ${res}`)
+    })
+    .catch((err) => {
       if (err) {
         throw err;
       };
@@ -77,7 +78,7 @@ export default class App extends React.Component {
 
   render () {
 
-    const renderSearchView = (props) =>{
+    const renderSearchView = (props) => {
       return (
         <SearchView
           onInput={this.onInput.bind(this)}
@@ -89,7 +90,7 @@ export default class App extends React.Component {
       );
     };
 
-    const renderCreateListingView = (props) =>{
+    const renderCreateListingView = (props) => {
       return (
         <CreateListingView
           onSubmit={this.onSubmitPost}
