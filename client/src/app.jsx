@@ -106,6 +106,12 @@ export default class App extends React.Component {
           Roomie
           </h1>
 
+          <Link to="/" style={{ textDecoration: 'none', color: '#888' }}>
+            <h4 className="link">
+            Home
+            </h4>
+          </Link>
+
           <Link to="/createListing" style={{ textDecoration: 'none', color: '#888' }}>
             <h4 className="link">
             New Listing
