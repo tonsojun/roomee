@@ -36,6 +36,13 @@ export default class App extends React.Component {
   }
 
   onSubmitPost (newListingData) {
+    //to populate the /house view
+    //may want to refactor into two separate handlers
+    this.setState({
+      currentHouseView: newListingData
+    })
+
+    //post request to server
     axios.post('/listing', newListingData)
       .then((res) => {
         // console.log(`-------> Folowing data returned from server POST -> ${res}`)
