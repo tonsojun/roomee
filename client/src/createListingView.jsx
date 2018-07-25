@@ -20,7 +20,7 @@ class CreateListingView extends React.Component {
     this.setRedirect = this.setRedirect.bind(this);
 
     const {
-      title, state, address, city, zipCode, price, descriptionTextbox, photoss
+      title, state, address, city, zipCode, price, descriptionTextbox, photos
     } = this.state;
   }
 
