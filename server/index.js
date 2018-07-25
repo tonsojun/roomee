@@ -1,13 +1,13 @@
 const express = require('express');
+const session = require('express-session');
 const bodyParser = require('body-parser');
 const path = require('path');
+const passport = require('passport');
 const db = require('../database/index.js');
 
 const PORT = process.env.PORT || 3000;
 
 const app = express();
-const passport = require('passport')
-const session = require('express-session')
 
 app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use(bodyParser.json());
@@ -20,14 +20,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 
-app.get('/search', (req, res) => {
+app.get('/searchListing', (req, res) => {
   const searchTerm = null || req.param('term');
   console.log('req from get in server', searchTerm);
   db.Listing.findListings(searchTerm, (err, data) => {
+    console.log('server find resulted in ',data)
     if (err) {
       res.sendStatus(500);
     } else {
-      res.json(data);
+      res.send(data);
     }
   });
 });
@@ -35,16 +36,17 @@ app.get('/search', (req, res) => {
 app.post('/listing', (req, res) => {
   console.log('req from get in server', req.body);
   db.Listing.createListing(req.body, (err, result) => {
+    console.log('server create resulted in ',result);
     if (err) {
       res.sendStatus(500);
     } else {
-      res.json(result);
+      res.send(result);
     }
   });
 });
 
-//handlers for refresh button on all views
-//res.redirect('back') will take user back to homepage
+// handlers for refresh button on all views
+// res.redirect('back') will take user back to homepage
 app.get('/loginView', (req, res) => {
   res.redirect('localhost:3000/loginView');
 });
