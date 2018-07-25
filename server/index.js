@@ -25,9 +25,9 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 
 app.get('/searchListing', (req, res) => {
-  const searchTerm = null || req.param('term');
+  const searchTerm = req.param('term');
   console.log('req from get in server', searchTerm);
-  db.Listing.findListings(searchTerm, (err, data) => {
+  db.Listing.findListingsByZip(searchTerm, (err, data) => {
     if (err) {
       res.sendStatus(500);
     } else {

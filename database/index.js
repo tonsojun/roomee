@@ -69,11 +69,13 @@ Listing.sync({ force: true }).then(() =>
     price: 1,
     zip: 12345,
     photo: 'sample.png'
-  }) );
-Listing.findListings = (query, callback) =>
-  Listing.findAll()
+  }));
+
+Listing.findListingsByZip = (query, callback) => {
+  Listing.findAll({ where: { zip: query } })
     .then(data => callback(null, data))
     .catch(err => callback(err, null));
+}
 
 Listing.createListing = (listing, callback) => {
   // console.log('what the database is receiving:', listing);
