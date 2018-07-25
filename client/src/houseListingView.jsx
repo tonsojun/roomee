@@ -1,9 +1,10 @@
 import React from 'react';
 
-const HouseListingView = () => (
+const HouseListingView = ({currentHouseView}) => (
   <div>
     <h4>
     house view here
+    {currentHouseView.title}
     </h4>
   </div>
 );

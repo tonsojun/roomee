@@ -5,13 +5,15 @@ import axios from 'axios';
 import SearchView from './searchView.jsx';
 import LoginView from './loginView.jsx';
 import CreateListingView from './createListingView.jsx';
+import HouseListingView from './houseListingView.jsx';
 
 export default class App extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
       term: '',
-      listings: []
+      listings: [],
+      currentHouseView: {}
     };
     this.onSubmitPost = this.onSubmitPost.bind(this);
   }
@@ -67,11 +69,27 @@ export default class App extends React.Component {
     });
   }
 
+  onTitleClick (item) {
+    this.setState({
+      currentHouseView: item
+    })
+    setTimeout(() => {
+      console.log(this.state.currentHouseView, 'currentHouseView from app');
+    }, 1000);
+  }
   /* ******** Helpers and Events **********/
 
   /* ******** Render **********/
 
   render () {
+
+    const renderHouseListingView = (props) => {
+      return (
+        <HouseListingView
+        currentHouseView={this.state.currentHouseView}
+        />
+        )
+    }
 
     const renderSearchView = (props) => {
       return (
@@ -80,6 +98,7 @@ export default class App extends React.Component {
           value={this.state.term}
           listings={this.state.listings}
           onSearch={this.onSearch.bind(this)}
+          onTitleClick={this.onTitleClick.bind(this)}
           // {...props}
         />
       );
@@ -125,10 +144,11 @@ export default class App extends React.Component {
             </h4>
           </Link>
 
+
           <Route path="/search" render={renderSearchView} />
           <Route path="/createListing" render={renderCreateListingView} />
           <Route path="/loginView" component={LoginView} />
-
+          <Route path="/house" render={renderHouseListingView} />
         </div>
       </Router>
     );
