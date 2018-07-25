@@ -1,5 +1,6 @@
 import React from 'react';
 import Dropzone from 'react-dropzone';
+import { Redirect } from 'react-router-dom';
 
 class CreateListingView extends React.Component {
   constructor (props) {
@@ -11,13 +12,15 @@ class CreateListingView extends React.Component {
       zipCode: '',
       price: '',
       descriptionTextbox: '',
-      photos: []
+      photos: [],
+      redirect: false,
     };
     this.onChange = this.onChange.bind(this);
     this.onDrop = this.onDrop.bind(this);
+    this.setRedirect = this.setRedirect.bind(this);
 
     const {
-      title, state, address, city, zipCode, price, descriptionTextbox, photos
+      title, state, address, city, zipCode, price, descriptionTextbox, photoss
     } = this.state;
   }
 
@@ -40,7 +43,23 @@ class CreateListingView extends React.Component {
     setTimeout(() => console.log(this.state.photos.length), 500);
   }
 
+  setRedirect () {
+    this.setState({
+      redirect: true
+    })
+  }
+
+  // renderRedirect () {
+  //   if (redirect) {
+  //     return ( <Redirect to='/' /> );
+  //   }
+  // }
+
   render () {
+    const { redirect } = this.state;
+    if (redirect) {
+      return (<Redirect to='/' />);
+    }
     return (
       <div id="create-listing">
         <h4>
@@ -95,6 +114,7 @@ class CreateListingView extends React.Component {
           type="submit"
           onClick={() => {
             this.props.onSubmit(this.state);
+            this.setRedirect()
           }}
         >
           Create Listing
