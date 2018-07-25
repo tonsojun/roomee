@@ -55,7 +55,7 @@ class CreateListingView extends React.Component {
   render () {
     const { redirect } = this.state;
     if (redirect) {
-      return (<Redirect to='/' />);
+      return (<Redirect to='/house' />);
     }
     return (
       <div id="create-listing">
