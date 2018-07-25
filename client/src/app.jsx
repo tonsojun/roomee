@@ -18,25 +18,13 @@ export default class App extends React.Component {
     this.onSubmitPost = this.onSubmitPost.bind(this);
   }
   /*  ******** axios Requests **********/
-  componentDidMount() {
-    axios.get('/searchListing')
-      .then((res) => {
-        console.log('componentDidMount', res.data);
-        this.setState({
-          listings: res.data
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
 
   onSearch (event) {
     event.preventDefault();
     const { term } = this.state;
     axios.get('/searchListing', { params: {term : term} })
       .then((res) => {
-        console.log(`-------> Folowing data returned from server GET -> ${res}`);
+         // console.log(`-------> Folowing data returned from server GET -> ${res}`);
         //  is res.data or res an array?
         this.setState({
           listings : res.data
