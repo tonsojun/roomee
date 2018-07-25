@@ -49,12 +49,6 @@ class CreateListingView extends React.Component {
     })
   }
 
-  // renderRedirect () {
-  //   if (redirect) {
-  //     return ( <Redirect to='/' /> );
-  //   }
-  // }
-
   render () {
     const { redirect } = this.state;
     if (redirect) {
