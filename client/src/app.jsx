@@ -19,6 +19,31 @@ export default class App extends React.Component {
     this.onSubmitPost = this.onSubmitPost.bind(this);
   }
   /*  ******** axios Requests **********/
+  componentDidMount() {
+    axios.get('http://ip-api.com/json')
+      .then(response => {
+        this.setState({
+          term: response.data.zip
+          // console.log('User\'s Location Data is ', response);
+          // console.log('User\'s zip code', response.data.zip);
+      });
+    })
+      .catch(err => console.log(err) );
+      this.onEnterSite()
+    }
+
+    onEnterSite() {
+    const { term } = this.state;
+    axios.get('/searchListing', { params: {zip : term} })
+      .then((res) => {
+        this.setState({
+          listings : res.data
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   onSearch (event) {
     event.preventDefault();
