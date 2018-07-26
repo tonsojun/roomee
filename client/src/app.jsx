@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 import axios from 'axios';
 import SearchView from './searchView.jsx';
 import LoginView from './loginView.jsx';
+import SignUpView from './signUpView.jsx';
 import CreateListingView from './createListingView.jsx';
 import HouseListingView from './houseListingView.jsx';
 
@@ -133,6 +134,12 @@ export default class App extends React.Component {
             </h4>
           </Link>
 
+          <Link to="/signUpView" style={{ textDecoration: 'none', color: '#888' }}>
+            <h4 className="link">
+            Sign Up
+            </h4>
+          </Link>
+
           <Link to="/search" style={{ textDecoration: 'none', color: '#888' }}>
             <h4 className="link">
             Search
@@ -143,6 +150,7 @@ export default class App extends React.Component {
           <Route path="/search" render={renderSearchView} />
           <Route path="/createListing" render={renderCreateListingView} />
           <Route path="/loginView" component={LoginView} />
+          <Route path="/signUpView" component={SignUpView} />
           <Route path="/house" render={renderHouseListingView} />
         </div>
       </Router>

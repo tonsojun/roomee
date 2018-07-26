@@ -4,10 +4,19 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const passport = require('passport');
 const db = require('../database/index.js');
+// const exphbs = require('express-handlebars');
 
 const PORT = process.env.PORT || 3000;
 
 const app = express();
+
+const passport = require('passport');
+const session = require('express-session');
+const env = require('dotenv').load();
+const models = require("../database/models");
+const authRoute = require('../database/passport_routes/auth.js')(app,passport);
+const passportStrat = require('../database/config/passport/passport.js')(passport, models.user);
+
 
 app.set('view engine', 'jade');
 
@@ -65,6 +74,22 @@ app.get('/search', (req, res) => {
   // res.render('searchView');
   res.redirect('localhost:3000/search');
 });
+
+//Synced to roomee database
+models.sequelize.sync()
+.then(function() {
+   console.log('Database is working!')
+})
+.catch(function(err) {
+    console.log(err, "Database isn't working!")
+});
+
+//Handlebars for the views
+// app.set('views', './database/passport_views')
+// app.engine('hbs', exphbs({
+//     extname: '.hbs'
+// }));
+// app.set('view engine', '.hbs');
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}!`);
