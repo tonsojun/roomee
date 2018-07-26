@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 
-const SignUpView = () => (
+const SignUpView = ({onSignUp}) => (
   <div>
     <form id="signUp" name="signUp" method="post" action="/signUp">
       <label htmlFor="email">
@@ -25,7 +25,7 @@ const SignUpView = () => (
       <input name="password" type="password" />
       {' '}
       <Link to="/loginView" style={{ textDecoration: 'none', color: '#888' }}>
-        <input className="btn" type="submit" value="Sign Up" />
+        <input onClick={onSignUp} className="btn" type="submit" value="Sign Up" />
       </Link>
     </form>
   </div>
