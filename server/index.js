@@ -10,9 +10,8 @@ const PORT = process.env.PORT || 3000;
 
 const app = express();
 
-const passport = require('passport');
 const session = require('express-session');
-const env = require('dotenv').load();
+const env = require('dotenv').config();
 const models = require("../database/models");
 const authRoute = require('../database/passport_routes/auth.js')(app,passport);
 const passportStrat = require('../database/config/passport/passport.js')(passport, models.user);

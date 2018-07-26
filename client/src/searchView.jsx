@@ -18,7 +18,7 @@ const SearchView = ({term, listings, onInput, onSearch, onTitleClick}) => (
         />
       })}
     </div>
-    <div>
+
   </div>
 );
 
