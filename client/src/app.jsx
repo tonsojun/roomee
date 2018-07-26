@@ -63,6 +63,9 @@ export default class App extends React.Component {
     this.setState({
       term: e.target.value
     });
+    // setTimeout(() => {
+    //   console.log(this.state.term, 'term from app');
+    // }, 1000);
   }
 
   onTitleClick (item) {
@@ -113,7 +116,7 @@ export default class App extends React.Component {
       <Router>
         <div className="app">
           <h1 className="title">
-          Roomie
+          Roomee
           </h1>
 
           <Link to="/" style={{ textDecoration: 'none', color: '#888' }}>

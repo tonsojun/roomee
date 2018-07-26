@@ -10,13 +10,13 @@ const SearchView = ({term, listings, onInput, onSearch, onTitleClick}) => (
       </button>
     </div>
     <div>
-      {listings.map((item) => {
+      {listings.map((item) =>
         <SearchResultView
           onTitleClick={onTitleClick}
           listing={item}
           key={item.id}
         />
-      })}
+      )}
     </div>
 
   </div>
