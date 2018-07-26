@@ -23,8 +23,9 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 
 app.get('/searchListing', (req, res) => {
-  const zip = req.param('zip');
-  const queryStr = zip ? { where: { zipCode: zip } } : {};
+  let zip = req.param('zip');
+  if(zip !== undefined) {zip = zip.substr(0,3)+'__'}
+  const queryStr = zip ? { where: { zipCode: { '$like': zip } }} : {};
   db.Listing.findListingsByZip(queryStr, (err, data) => {
     if (err) {
       res.sendStatus(500);

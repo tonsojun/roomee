@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
-
+const Op = Sequelize.Op;
+const operatorsAliases = { $like: Op.like };
 const sequelize = new Sequelize('roomee', 'root', null, {
   host: 'localhost',
   dialect: 'mysql',
