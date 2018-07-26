@@ -14,7 +14,8 @@ export default class App extends React.Component {
     this.state = {
       term: '',
       listings: [],
-      currentHouseView: {}
+      currentHouseView: {},
+      justRegistered: false
     };
     this.onSubmitPost = this.onSubmitPost.bind(this);
   }
@@ -101,16 +102,40 @@ export default class App extends React.Component {
       console.log(this.state.currentHouseView, 'currentHouseView from app');
     }, 1000);
   }
+
+  onSignUp (e) {
+    //give user a human way to know they have registered
+    this.setState({
+      justRegistered: true
+    });
+  }
+
   /* ******** Helpers and Events **********/
 
   /* ******** Render **********/
 
   render () {
-
+    //passing props to views with routes
     const renderHouseListingView = (props) => {
       return (
         <HouseListingView
         currentHouseView={this.state.currentHouseView}
+        />
+        )
+    }
+
+    const renderSignUpView = (props) => {
+      return (
+        <SignUpView
+        onSignUp={this.onSignUp.bind(this)}
+        />
+        )
+    }
+
+    const renderLoginView = (props) => {
+      return (
+        <LoginView
+        registered={this.state.justRegistered}
         />
         )
     }
@@ -177,8 +202,8 @@ export default class App extends React.Component {
 
           <Route path="/search" render={renderSearchView} />
           <Route path="/createListing" render={renderCreateListingView} />
-          <Route path="/loginView" component={LoginView} />
-          <Route path="/signUpView" component={SignUpView} />
+          <Route path="/loginView" render={renderLoginView} />
+          <Route path="/signUpView" render={renderSignUpView} />
           <Route path="/house" render={renderHouseListingView} />
         </div>
       </Router>
