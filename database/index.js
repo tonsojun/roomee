@@ -47,7 +47,7 @@ const Listing = sequelize.define('listing', {
   zipCode: { type: Sequelize.STRING },
   lat: { type: Sequelize.DECIMAL(9, 6) },
   lon: { type: Sequelize.DECIMAL(9, 6) },
-  description: { type: Sequelize.STRING },
+  description: { type: Sequelize.TEXT },
   price: { type: Sequelize.INTEGER }
 });
 
@@ -59,8 +59,8 @@ const Photo = sequelize.define('photo', {
 // User.hasMany(Listing);
 Listing.hasMany(Photo);
 
-sequelize.sync({ force: true });
-// sequelize.sync();
+// sequelize.sync({ force: true });
+sequelize.sync();
 
 Listing.findListingsByZip = (queryStr, callback) => {
   queryStr.include = [{ model: Photo }];
