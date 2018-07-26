@@ -134,7 +134,7 @@ export default class App extends React.Component {
           <Route path="/createListing" render={renderCreateListingView} />
           <Route path="/loginView" component={LoginView} />
           <Route path="/signUpView" component={SignUpView} />
-
+          <Route path="/house" render={renderHouseListingView} />
         </div>
       </Router>
     );
