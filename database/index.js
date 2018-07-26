@@ -4,7 +4,7 @@ const Sequelize = require('sequelize');
 
 // create the connection to database
 //if name is empty, you can create the db using sequelize
- const sequelize = new Sequelize('roomie', 'root', null, { 
+ const sequelize = new Sequelize('roomee', 'root', null, { 
   host: 'localhost', 
   dialect: 'mysql'  ,
   pool: {

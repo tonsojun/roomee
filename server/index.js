@@ -2,14 +2,16 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const db = require('../database/index.js');
+// const exphbs = require('express-handlebars');
 
 const PORT = process.env.PORT || 3000;
 
 const app = express();
-const passport = require('passport')
-const session = require('express-session')
+const passport = require('passport');
+const session = require('express-session');
 const env = require('dotenv').load();
-const models = require("./client/models");
+const models = require("../database/models");
+const authRoute = require('../database/passport_routes/auth.js')(app);
 
 app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use(bodyParser.json());
@@ -67,6 +69,13 @@ models.sequelize.sync()
 .catch(function(err) {
     console.log(err, "Database isn't working!")
 });
+
+//Handlebars for the views
+// app.set('views', './database/passport_views')
+// app.engine('hbs', exphbs({
+//     extname: '.hbs'
+// }));
+// app.set('view engine', '.hbs');
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}!`);
