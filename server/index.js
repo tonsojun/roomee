@@ -1,18 +1,22 @@
 const express = require('express');
+// const session = require('express-session');
 const bodyParser = require('body-parser');
 const path = require('path');
+const passport = require('passport');
 const db = require('../database/index.js');
 // const exphbs = require('express-handlebars');
 
 const PORT = process.env.PORT || 3000;
 
 const app = express();
+
 const passport = require('passport');
 const session = require('express-session');
 const env = require('dotenv').load();
 const models = require("../database/models");
 const authRoute = require('../database/passport_routes/auth.js')(app,passport);
 const passportStrat = require('../database/config/passport/passport.js')(passport, models.user);
+
 
 app.set('view engine', 'jade');
 
@@ -27,40 +31,46 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 
-app.get('/search', (req, res) => {
-  const searchTerm = null || req.param('term');
-  console.log('req from get in server', searchTerm);
-  db.Listing.findListings(searchTerm, (err, data) => {
+app.get('/searchListing', (req, res) => {
+  const zip = req.param('zip');
+  const queryStr = zip ? { where: { zipCode: zip } } : {};
+  db.Listing.findListingsByZip(queryStr, (err, data) => {
     if (err) {
       res.sendStatus(500);
     } else {
-      res.json(data);
+      res.send(data);
     }
   });
 });
 
 app.post('/listing', (req, res) => {
-  console.log('req from get in server', req.body);
   db.Listing.createListing(req.body, (err, result) => {
     if (err) {
       res.sendStatus(500);
     } else {
-      res.json(result);
+      res.send(result);
     }
   });
 });
 
-//handlers for refresh button on all views
-//res.redirect('back') will take user back to homepage
-app.get('/loginView', (req, res) => {
-  res.redirect('localhost:3000/loginView');
-});
-
+// handlers for refresh button on all views
+// res.redirect('back') will take user back to homepage
 app.get('/createListing', (req, res) => {
   res.redirect('localhost:3000/createListing');
 });
 
+app.get('/loginView', (req, res) => {
+  // res.render('loginView');
+  res.redirect('localhost:3000/loginView');
+});
+
+app.get('/house', (req, res) => {
+  // res.render('loginView');
+  res.redirect('localhost:3000/house');
+});
+
 app.get('/search', (req, res) => {
+  // res.render('searchView');
   res.redirect('localhost:3000/search');
 });
 

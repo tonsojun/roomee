@@ -1,7 +1,7 @@
 import React from 'react';
 import SearchResultView from './searchResultView.jsx';
 
-const SearchView = ({term, listings, onInput, onSearch}) => (
+const SearchView = ({term, listings, onInput, onSearch, onTitleClick}) => (
   <div>
     <div className="search-div">
       <input className="input-bar" type="text" value={term} onChange={onInput} style={{ textAlign: 'center' }} placeholder="Zip Code" />
@@ -10,9 +10,15 @@ const SearchView = ({term, listings, onInput, onSearch}) => (
       </button>
     </div>
     <div>
-      {listings.map(item => <SearchResultView listing={item} key={item.id} />)
-      }
+      {listings.map((item) => {
+        <SearchResultView
+          onTitleClick={onTitleClick}
+          listing={item}
+          key={item.id}
+        />
+      })}
     </div>
+    <div>
   </div>
 );
 
