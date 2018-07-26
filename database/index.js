@@ -5,17 +5,17 @@ const Sequelize = require('sequelize');
 // create the connection to database
 //if name is empty, you can create the db using sequelize
  const sequelize = new Sequelize('roomee', 'root', null, { 
-  host: 'localhost', 
-  dialect: 'mysql'  ,
+  host: 'localhost',
+  dialect: 'mysql',
   pool: {
-    max: 5, 
-    min: 1, 
-    acquire: 30000, 
+    max: 5,
+    min: 1,
+    acquire: 30000,
     idle: 1
   }
 });
 
-sequelize.authenticate() 
+sequelize.authenticate()
   .then(() => console.log('Connection has been established successfully.')) 
   .catch(err => console.error('Unable to connect to the database:', err));
 
