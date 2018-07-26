@@ -11,7 +11,8 @@ const passport = require('passport');
 const session = require('express-session');
 const env = require('dotenv').load();
 const models = require("../database/models");
-const authRoute = require('../database/passport_routes/auth.js')(app);
+const authRoute = require('../database/passport_routes/auth.js')(app,passport);
+const passportStrat = require('../database/config/passport/passport.js')(passport, models.user);
 
 app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use(bodyParser.json());
