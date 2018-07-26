@@ -22,7 +22,7 @@ export default class App extends React.Component {
   onSearch (event) {
     event.preventDefault();
     const { term } = this.state;
-    axios.get('/searchListing', { params: {term : term} })
+    axios.get('/searchListing', { params: {zip : term} })
       .then((res) => {
          // console.log(`-------> Folowing data returned from server GET -> ${res}`);
         //  is res.data or res an array?
