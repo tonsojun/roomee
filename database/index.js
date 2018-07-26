@@ -1,9 +1,10 @@
 const Sequelize = require('sequelize');
 
-
 // create the connection to database
 //if name is empty, you can create the db using sequelize
- const sequelize = new Sequelize('roomee', 'root', null, {
+const Op = Sequelize.Op;
+const operatorsAliases = { $like: Op.like };
+const sequelize = new Sequelize('roomee', 'root', null, {
   host: 'localhost',
   dialect: 'mysql',
   pool: {
