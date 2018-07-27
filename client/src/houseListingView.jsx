@@ -2,29 +2,30 @@ import React from 'react';
 
 const HouseListingView = ({currentHouseView}) => (
   <div id="house-listing-view" className="section columns">
-    <div className="column has-text-left">
-      <div >
+    <div className="column has-text-left is-half">
+      <div>
         <h4 className="heading">Title</h4>
-        <p className="title">{currentHouseView.title}</p>
+        <p className="content">{currentHouseView.title}</p>
       </div>
-      <div >
+      <div>
         <h4 className="heading">Address</h4>
-        <p className="title">
-          {currentHouseView.address}
-          {currentHouseView.city}
+        <p className="content">
+          {currentHouseView.address + ' '}
+          {currentHouseView.city + ', '}
+          {currentHouseView.state + ' '}
           {currentHouseView.zipCode}
         </p>
       </div>
-      <div >
+      <div>
         <h4 className="heading">Price</h4>
-        <p className="title">{currentHouseView.price}</p>
+        <p className="content">{'$' +currentHouseView.price}</p>
       </div>
-      <div >
+      <div>
         <h6 className="heading">Description</h6>
-        <p className="title">
+        <p className="content">
         {currentHouseView.description}</p>
-      </div>
-      <div >
+        </div>
+      <div>
         <h4 className="heading">Contact</h4>
       </div>
     </div>
