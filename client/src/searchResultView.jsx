@@ -15,15 +15,15 @@ const SearchResultView = ({listing, onTitleClick}) => (
 
       <div>
         {
-          listing.photos.map((photoUrl) => {
+          listing.photos.map((photo,ind) => {
             // cloundinary image sizes are manipulated by inserting arguments after the 'upload' part of the file parth
             // example: "http://res.cloudinary.com/dwysumxzw/image/upload/v1532558555/kog_r_full_shot_x2ggw7.jpg";
             // I'm not connected to the database yet and will need to test the lines below once we are
-            const arr = photoUrl.split('upload/');
-            const uploadWidth = 'upload/w_412/';
+            const arr = photo.url.split('upload/');
+            const uploadWidth = 'upload/w_412,c_scale/';
             const resizedPhotoUrl = arr.join(uploadWidth);
 
-            <img src="`${resizedPhotoUrl}`" alt="picture of room for rent"></img>
+            return (<img src={resizedPhotoUrl} alt="picture of room for rent" key={ind}></img>)
           })
         }
       </div>
