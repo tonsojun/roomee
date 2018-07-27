@@ -6,9 +6,16 @@ const passport = require('passport');
 const db = require('../database/index.js');
 const env = require('dotenv').config();
 
+// const passportLocal = require('passport-local');
+// const exphbs = require('express-handlebars');
+
 const PORT = process.env.PORT || 3000;
 
 const app = express();
+const cookieparser = require('cookie-parser')
+// const models = require("../database/models");
+// const authRoute = require('../database/passport_routes/auth.js')(app,passport);
+// const passportStrat = require('../database/passport/passport.js')(passport, models.user);
 
 // const models = require('../database/models');
 // const authRoute = require('../database/passport_routes/auth.js')(app,passport);
@@ -25,6 +32,7 @@ app.use(session({
   resave: false, //             resave - false means do not save back to the store unless there is a change
   saveUninitialized: false //  saveuninitialized false - don't create a session unless it is a logged in user
   // cookie: { secure: false }
+
 }))
 // initialize passport and the express sessions and passport sessions
 app.use(passport.initialize());
@@ -138,7 +146,6 @@ passport.serializeUser(function(userid, done) {
 passport.deserializeUser(function(userid, done) {
   done(null, userid);
 })
-
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}!`);
