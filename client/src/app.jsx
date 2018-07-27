@@ -162,49 +162,76 @@ export default class App extends React.Component {
       );
     };
 
+    const renderHome = (props) => {
+      return (
+        <section className="hero is-medium is-primary">
+            <div className="hero-body">
+              <div className="container">
+                <h1 className="title">
+                Welcome to Roomee
+                </h1>
+                <h2 className="subtitle">
+                we're not craigstlist
+                </h2>
+              </div>
+            </div>
+          </section>
+      );
+    };
+
     return (
       <Router>
-        <div className="app">
-          <h1 className="title">
+        <div className="hero">
+          <h1 className="level-item title has-text-centered is-medium">
           Roomee
           </h1>
-
-          <Link to="/" style={{ textDecoration: 'none', color: '#888' }}>
-            <h4 className="link">
-            Home
-            </h4>
-          </Link>
-
-          <Link to="/createListing" style={{ textDecoration: 'none', color: '#888' }}>
-            <h4 className="link">
-            New Listing
-            </h4>
-          </Link>
-
-          <Link to="/loginView" style={{ textDecoration: 'none', color: '#888' }}>
-            <h4 className="link">
-            Login
-            </h4>
-          </Link>
-
-          <Link to="/signUpView" style={{ textDecoration: 'none', color: '#888' }}>
-            <h4 className="link">
-            Sign Up
-            </h4>
-          </Link>
-
-          <Link to="/search" style={{ textDecoration: 'none', color: '#888' }}>
-            <h4 className="link">
-            Search
-            </h4>
-          </Link>
+          <nav className="level container">
+            <Link to="/" style={{ textDecoration: 'none', color: '#888' }}>
+              <h4 className="level-item has-text-centered heading">
+              Home
+              </h4>
+            </Link>
 
 
+            <Link to="/search" style={{ textDecoration: 'none', color: '#888' }}>
+              <h4 className="level-item has-text-centered heading">
+              Search
+              </h4>
+            </Link>
+            <Link to="/createListing" style={{ textDecoration: 'none', color: '#888' }}>
+              <h4 className="level-item has-text-centered heading">
+              New Listing
+              </h4>
+            </Link>
+
+            <Link to="/loginView" style={{ textDecoration: 'none', color: '#888' }}>
+              <h4 className="level-item has-text-centered heading">
+              Login
+              </h4>
+            </Link>
+
+            <Link to="/signUpView" style={{ textDecoration: 'none', color: '#888' }}>
+              <h4 className="level-item has-text-centered heading">
+              Sign Up
+              </h4>
+            </Link>
+          </nav>
+
+
+
+
+          <Route exact path="/" render={renderHome} />
           <Route path="/search" render={renderSearchView} />
           <Route path="/createListing" render={renderCreateListingView} />
           <Route path="/loginView" render={renderLoginView} />
           <Route path="/signUpView" render={renderSignUpView} />
           <Route path="/house" render={renderHouseListingView} />
+
+          <footer className="footer">
+            <div class="content has-text-centered">
+              <h6 className="title">by the roomee project</h6>
+            </div>
+          </footer>
         </div>
       </Router>
     );
