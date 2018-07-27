@@ -1,13 +1,34 @@
 import React from 'react';
 
 const HouseListingView = ({currentHouseView}) => (
-  <div id="house-listing-view">
-    <h4>Title: {currentHouseView.title}</h4>
-    <h5>Address: {currentHouseView.address}, {currentHouseView.city} {currentHouseView.zipCode}</h5>
-    <h5>Price: {currentHouseView.price} </h5>
-    <p>Description: {currentHouseView.description}</p>
-    <h6>Contact</h6>
-    <div>
+  <div id="house-listing-view" className="section columns">
+    <div className="column has-text-left">
+      <div >
+        <h4 className="heading">Title</h4>
+        <p className="title">{currentHouseView.title}</p>
+      </div>
+      <div >
+        <h4 className="heading">Address</h4>
+        <p className="title">
+          {currentHouseView.address}
+          {currentHouseView.city}
+          {currentHouseView.zipCode}
+        </p>
+      </div>
+      <div >
+        <h4 className="heading">Price</h4>
+        <p className="title">{currentHouseView.price}</p>
+      </div>
+      <div >
+        <h6 className="heading">Description</h6>
+        <p className="title">
+        {currentHouseView.description}</p>
+      </div>
+      <div >
+        <h4 className="heading">Contact</h4>
+      </div>
+    </div>
+    <div className="column">
         {currentHouseView.photos.map((photo,ind) => {
             const arr = photo.url.split('upload/');
             const uploadWidth = 'upload/w_412,c_scale/';
