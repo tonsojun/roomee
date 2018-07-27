@@ -83,67 +83,117 @@ class CreateListingView extends React.Component {
       return (<Redirect to='/house' />);
     }
     return (
-      <div id="create-listing">
-        <h4>
-        Create Your Listing:
-        </h4>
-        Title:
-        <input id="title" value={this.title} onChange={this.onChange} />
-        Address:
-        <input id="address" value={this.address} onChange={this.onChange} />
-        City:
-        <input id="city" value={this.city} onChange={this.onChange} />
-        State:
-        <input id="stateAbbr" size="2" value={this.stateAbbr} onChange={this.onChange} />
-        ZipCode:
-        <input id="zipCode" size="5" value={this.zipCode} onChange={this.onChange} />
-        Price:
-        <input id="price" size="4" value={this.price} onChange={this.onChange} />
-        Description:
-        <input id="descriptionTextbox" value={this.description} onChange={this.onChange} />
+      <section className="section">
+        <div id="create-listing" className="columns">
+          <div className="column is-half is-offset-one-quarter">
+            <h4 className="title">
+            Create Your Listing:
+            </h4>
+            <div className="field">
+              <label className="label">
+              Title:
+              </label>
+              <div className="control">
+                <input className="input" id="title" value={this.title} onChange={this.onChange} />
+                <p className="help">
+                  What do you want to call your listing?
+                </p>
+              </div>
+            </div>
+            <div className="field">
+              <label className="label">
+                Address:
+              </label>
+              <div className="control">
+                <input className="input" id="address" value={this.address} onChange={this.onChange} />
+                <p className="help">Where is your listing located?</p>
+              </div>
+            </div>
+            <div className="columns">
+              <div className="field column is-one-quarter">
+                <div className="control">
+                  <input className="input" id="city" value={this.city} onChange={this.onChange} />
+                  <p className="help">City</p>
+                </div>
+              </div>
+              <div className="field column is-one-fifth">
+                <div className="control">
+                  <input className="input" id="stateAbbr" size="2" value={this.stateAbbr} onChange={this.onChange} />
+                  <p className="help">State</p>
+                </div>
+              </div>
+              <div className="field column is-one-fifth">
+                <div className="control">
+                  <input className="input" id="zipCode" size="5" value={this.zipCode} onChange={this.onChange} />
+                  <p className="help">ZipCode</p>
+                </div>
+              </div>
+            </div>
+            <div className="field ">
+              <label className="label">
+                Price:
+              </label>
+              <div className="control">
+                <input className="input" id="price" size="4" value={this.price} onChange={this.onChange} />
+                <p className="help">USD</p>
+              </div>
+            </div>
+            <div className="field">
+              <label className="label">
+                Description:
+              </label>
+              <div className="control">
 
-        <section>
-          <div className="dropzone">
-            <Dropzone
-              onDrop={this.onDrop}
-              multiple
-              accept="image/jpeg, image/png"
-              maxSize={5242880}
-            >
-              <p>
-              Add up to 5 images
-              </p>
-            </Dropzone>
+                <input className="input" id="descriptionTextbox" value={this.description} onChange={this.onChange} />
+              </div>
+            </div>
+            <section>
+              <div className="dropzone">
+                <Dropzone
+                  onDrop={this.onDrop}
+                  multiple
+                  accept="image/jpeg, image/png"
+                  maxSize={5242880}
+                >
+                  <p>
+                  Add up to 5 images
+                  </p>
+                </Dropzone>
+              </div>
+              <aside>
+                <h2>
+                Dropped files
+                </h2>
+                <ul>
+                  {
+                    this.state.photos.map((f, i) => {
+                      // this is very odd, the line above correctly displays the file name, but
+                      <li key={f[0].name}>
+                       File {i}
+                      </li>
+                      // the line above is not rendering ANYTHING
+                      // the photos are being saved  however, so come back to this post-MVP
+                    })
+                  }
+                </ul>
+              </aside>
+            </section>
+            <div className="field">
+              <div className="control">
+                <button className="button is-link"
+                  type="submit"
+                  onClick={() => {
+                    this.props.onSubmit(this.state);
+                    this.setRedirect()
+                  }}
+                >
+                  Create Listing
+                </button>
+              </div>
+            </div>
           </div>
-          <aside>
-            <h2>
-            Dropped files
-            </h2>
-            <ul>
-              {
-                this.state.photos.map((f, i) => {
-                  // this is very odd, the line above correctly displays the file name, but
-                  <li key={f[0].name}>
-                   File {i}
-                  </li>
-                  // the line above is not rendering ANYTHING
-                  // the photos are being saved  however, so come back to this post-MVP
-                })
-              }
-            </ul>
-          </aside>
-        </section>
-
-        <button
-          type="submit"
-          onClick={() => {
-            this.props.onSubmit(this.state);
-            this.setRedirect()
-          }}
-        >
-          Create Listing
-        </button>
-      </div>
+        </div>
+      </section>
     );
   }
 }
