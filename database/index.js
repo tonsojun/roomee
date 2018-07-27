@@ -21,15 +21,41 @@ sequelize.authenticate()
 
 const User = sequelize.define('user', {
   id: {
-    allowNull: false,
     autoIncrement: true,
     primaryKey: true,
     type: Sequelize.INTEGER
   },
-  username: Sequelize.STRING,
-  firstName: Sequelize.STRING,
-  lastName: Sequelize.STRING,
-  email: Sequelize.STRING
+  firstname: {
+    type: Sequelize.STRING,
+    notEmpty: true
+  },
+  lastname: {
+    type: Sequelize.STRING,
+    notEmpty: true
+  },
+  username: {
+    type: Sequelize.STRING
+  },
+  about: {
+    type: Sequelize.TEXT
+  },
+  email: {
+    type: Sequelize.STRING,
+    validate: {
+    isEmail: true
+    }
+  },
+  password: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  last_login: {
+    type: Sequelize.DATE
+  },
+  status: {
+    type: Sequelize.ENUM('active', 'inactive'),
+    defaultValue: 'active'
+  }
 });
 
 const Listing = sequelize.define('listing', {
@@ -56,7 +82,7 @@ const Photo = sequelize.define('photo', {
   url: Sequelize.STRING
 });
 
-// User.hasMany(Listing);
+User.hasMany(Listing);
 Listing.hasMany(Photo);
 
 // sequelize.sync({ force: true });
