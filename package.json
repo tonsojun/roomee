@@ -11,15 +11,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ashalley7189/roomee.git"
+    "url": "git+https://github.com/roomee-project/roomee.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ashalley7189/roomee/issues"
+    "url": "https://github.com/roomee-project/roomee/issues"
   },
-  "homepage": "https://github.com/ashalley7189/roomee#readme",
+  "homepage": "https://github.com/roomee-project/roomee#readme",
   "dependencies": {
     "axios": "^0.18.0",
     "babel-preset-es2015": "^6.24.1",
@@ -34,7 +34,6 @@
     "express-session": "^1.15.6",
     "jquery": "^3.3.1",
     "mocha": "^5.2.0",
-    "mysql": "file:node_modules/mysql",
     "mysql2": "^1.5.3",
     "node": "^10.6.0",
     "passport": "^0.4.0",
@@ -43,7 +42,6 @@
     "react-dom": "^16.4.1",
     "react-dropzone": "^4.2.13",
     "react-router-dom": "^4.3.1",
-    "really-need": "^1.9.2",
     "request": "^2.87.0",
     "sequelize": "^4.38.0",
     "sinon": "^6.1.3",
@@ -61,6 +59,7 @@
     "eslint-plugin-import": "^2.13.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.10.0",
+    "really-need": "^1.9.2",
     "supertest": "^3.1.0",
     "webpack": "^4.16.1",
     "webpack-cli": "^3.1.0"
