@@ -29,11 +29,11 @@ export default class App extends React.Component {
           // console.log('User\'s zip code', response.data.zip);
       });
     })
-      .catch(err => console.log(err) );
-      this.onEnterSite()
+      .catch(err => console.log(err));
+      this.currentZip()
     }
 
-    onEnterSite() {
+    currentZip() {
     const { term } = this.state;
     axios.get('/searchListing', { params: {zip : term} })
       .then((res) => {
