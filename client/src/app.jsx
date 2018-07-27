@@ -20,25 +20,25 @@ export default class App extends React.Component {
     this.onSubmitPost = this.onSubmitPost.bind(this);
   }
   /*  ******** axios Requests **********/
-  componentDidMount() {
-    axios.get('http://ip-api.com/json')
-      .then(response => {
-        this.setState({
-          term: response.data.zip
-          // console.log('User\'s Location Data is ', response);
-          // console.log('User\'s zip code', response.data.zip);
-      });
-    })
-      .catch(err => console.log(err));
-      this.currentZip()
-    }
 
-    currentZip() {
-    const { term } = this.state;
-    axios.get('/searchListing', { params: {zip : term} })
+  componentDidMount () {
+    // get request fetches the zipcod of the user's IP address and calls onEnterSite
+    axios.get('http://ip-api.com/json')
+      .then((response) => {
+        this.searchByIpZipCode(response.data.zip);
+        console.log(response.data.zip);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  searchByIpZipCode (zipCode) {
+    // get request queries databse for all listings matching the user's ip address zipcode
+    axios.get('/searchListing', { params: { zip: zipCode } })
       .then((res) => {
         this.setState({
-          listings : res.data
+          listings: res.data
         });
       })
       .catch((err) => {
@@ -49,7 +49,7 @@ export default class App extends React.Component {
   onSearch (event) {
     event.preventDefault();
     const { term } = this.state;
-    axios.get('/searchListing', { params: {zip : term} })
+    axios.get('/searchListing', { params: { zip: term } })
       .then((res) => {
          // console.log(`-------> Folowing data returned from server GET -> ${res}`);
         //  is res.data or res an array?
@@ -217,9 +217,6 @@ export default class App extends React.Component {
             </Link>
           </nav>
 
-
-
-
           <Route exact path="/" render={renderHome} />
           <Route path="/search" render={renderSearchView} />
           <Route path="/createListing" render={renderCreateListingView} />
@@ -228,7 +225,7 @@ export default class App extends React.Component {
           <Route path="/house" render={renderHouseListingView} />
 
           <footer className="footer">
-            <div class="content has-text-centered">
+            <div className="content has-text-centered">
               <h6 className="title">by the roomee project</h6>
             </div>
           </footer>
