@@ -8,8 +8,9 @@ const SearchView = ({term, listings, onInput, onSearch, onTitleClick}) => (
       <button style={{ textAlign: 'center' }} className="search-button" type="submit" onClick={onSearch} >
         Search
       </button>
-    </div>
-    <div>
+     </div>
+
+     <div>
       {listings.map((item) =>
         <SearchResultView
           onTitleClick={onTitleClick}
