@@ -57,7 +57,7 @@ Custom Styles
 
 body {
   color: #888;
-  font: 300 16px/22px "Karla", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font: 300 16px/22px "Karla", "Open Sans", "Helvetica Neue",Helvetica, Arial, sans-serif;
   background: white;
 }
 
@@ -66,40 +66,9 @@ body {
   margin-top: 10px;
 }
 
-
-.search-button {
-  font: bold 16px/22px "Karla", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  border: 0.30rem solid #888;
-  background-color:white;
-  color: #888;
-  height:31px;
-  width: 150px;
-}
-
-.input-bar {
-  background-color: #888;
-  border:none;
-  border-bottom: solid #888;
-  color: white;
-  height: 26px;
-  font-size: 22px;
-  width: 350px;
-}
-
 *:focus {
     outline: none;
 }
-
-
-.search-div, .search-result {
-  /*display: flex;*/
-  /*justify-content: center;*/
-  text-align: center;
-  margin: 0 0 3px 0;
-  /*margin: 50px 0px 50px 50px;*/
-}
-
-
 
 .login {
   display: flex-end;
