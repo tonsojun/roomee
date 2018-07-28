@@ -2,18 +2,17 @@ import React from 'react';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 
 const SearchResultView = ({listing, onTitleClick}) => (
-  <div className="search-result">
-    <img src="" alt="" />
+  <div className="hero">
     <Link to="/house" style={{ textDecoration: 'none', color: '#888' }}>
-      <h4 onClick={()=>onTitleClick(listing)}>
+      <h4 className="level-item has-text-centered heading" onClick={()=>onTitleClick(listing)}>
         {listing.title}
       </h4>
     </Link>
     <div>
-      <h4>{listing.city}</h4>
-      <h5>{listing.price}</h5>
+      <h4 className="level-item has-text-centered heading">{listing.city}</h4>
+      <h5 className="level-item has-text-centered heading">${listing.price}</h5>
 
-      <div>
+      <div className="level-item has-text-centered heading">
         {
           listing.photos.map((photo,ind) => {
             // cloundinary image sizes are manipulated by inserting arguments after the 'upload' part of the file parth

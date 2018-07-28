@@ -2,15 +2,16 @@ import React from 'react';
 import SearchResultView from './searchResultView.jsx';
 
 const SearchView = ({term, listings, onInput, onSearch, onTitleClick}) => (
-  <div>
-    <div className="search-div">
-      <input className="input-bar" type="text" value={term} onChange={onInput} style={{ textAlign: 'center' }} placeholder="Zip Code" />
-      <button style={{ textAlign: 'center' }} className="search-button" type="submit" onClick={onSearch} >
-        Search
+  <div >
+    <div class="columns is-multiline is-mobile is-centered control">
+      <input class="column is-one-quarter input is-small" style={{ textAlign: 'center' }}
+      type="text" value={term} onChange={onInput} placeholder="Zip Code" />
+      <button className="button is-small" style={{ textAlign: 'center' }}
+      type="submit" onClick={onSearch} >
+      Search
       </button>
-     </div>
-
-     <div>
+    </div>
+    <div>
       {listings.map((item) =>
         <SearchResultView
           onTitleClick={onTitleClick}
@@ -19,8 +20,10 @@ const SearchView = ({term, listings, onInput, onSearch, onTitleClick}) => (
         />
       )}
     </div>
-
   </div>
 );
 
 export default SearchView;
+//column is-half is-offset-one-quarter level-item heading input
+//column level-item has-text-centered heading button
+//column is-one-fifth is-narrow

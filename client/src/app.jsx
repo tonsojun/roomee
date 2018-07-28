@@ -26,7 +26,6 @@ export default class App extends React.Component {
     axios.get('http://ip-api.com/json')
       .then((response) => {
         this.searchByIpZipCode(response.data.zip);
-        console.log(response.data.zip);
       })
       .catch((err) => {
         console.log(err);
