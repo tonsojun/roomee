@@ -1,18 +1,18 @@
 import React from 'react';
 
 const LoginView = ({registered}) => (
-    <form id="login" name="login" method="post" action="login">
+    <form id="login" name="login" method="post" action="login" className="column is-half is-offset-one-quarter">
     {
       registered ?
       <h4>Thanks for signing up! Please log in.</h4>
       :
       null
     }
-        <label for="email">Email Address: </label>
-        <input class="text" name="email" type="text" />{' '}
-        <label for="password">Password: </label>
+        <label>Email Address: </label>
+        <input className="text" name="email" type="text" />{' '}
+        <label>Password: </label>
         <input name="password" type="password" /> {' '}
-        <input class="btn" type="submit" value="Log In" />
+        <input className="button" type="submit" value="Log In" />
     </form>
 );
 

@@ -16,37 +16,19 @@ sequelize.authenticate()
       primaryKey: true,
       type: Sequelize.INTEGER
     },
-    firstname: {
+    firstname: Sequelize.STRING,
+    lastname: Sequelize.STRING,
+    username:  {
       type: Sequelize.STRING,
-      notEmpty: true
+      allowNull: false
     },
-    lastname: {
-      type: Sequelize.STRING,
-      notEmpty: true
-    },
-    username: {
-      type: Sequelize.STRING
-    },
-    about: {
-      type: Sequelize.TEXT
-    },
-    email: {
-      type: Sequelize.STRING,
-      validate: {
-      isEmail: true
-      }
-    },
+    about: Sequelize.TEXT,
+    email: Sequelize.STRING,
     password: {
       type: Sequelize.STRING,
       allowNull: false
     },
-    last_login: {
-      type: Sequelize.DATE
-    },
-    status: {
-      type: Sequelize.ENUM('active', 'inactive'),
-      defaultValue: 'active'
-    }
+    last_login: Sequelize.DATE
   });
 
 const Listing = sequelize.define('listing', {
