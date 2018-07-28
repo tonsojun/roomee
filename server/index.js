@@ -10,11 +10,9 @@ const PORT = process.env.PORT || 3000;
 
 const app = express();
 
-// const models = require("../database/models");
+// const models = require('../database/models');
 // const authRoute = require('../database/passport_routes/auth.js')(app,passport);
 // const passportStrat = require('../database/config/passport/passport.js')(passport, models.user);
-
-
 // app.set('view engine', 'jade');
 
 app.use(express.static(path.join(__dirname, '../client/dist')));
@@ -30,8 +28,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/searchListing', (req, res) => {
   let zip = req.param('zip');
-  if(zip !== undefined) {zip = zip.substr(0,3)+'__'}
-  const queryStr = zip ? { where: { zipCode: { '$like': zip } }} : {};
+  if (zip !== undefined) { zip = zip.substr(0, 3) + '__'; }
+  const queryStr = zip ? { where: { zipCode: { $like: zip } } } : {};
   db.Listing.findListingsByZip(queryStr, (err, data) => {
     if (err) {
       res.sendStatus(500);
@@ -72,8 +70,8 @@ app.get('/search', (req, res) => {
   res.redirect('localhost:3000/search');
 });
 
-app.get('/signup', () => res.render('signup'));
-app.get('/loginView', () => res.render('login'));
+app.get('/signup', (req, res) => res.render('signup'));
+app.get('/loginView', (req, res) => res.render('login'));
 
 /**
  * Create user will post to /signup for adding a user or to validate if username is available
@@ -83,22 +81,40 @@ app.get('/loginView', () => res.render('login'));
  * 204 indicates username is not in use, but since no password was sent with the request, no creation will happen
  * 409 when the databse rejected an add user
  */
-app.post('/signup',(req, res)=> {
+app.post('/signup', (req, res) => {
   db.User.findbyUsername(req.body.username, (err, user) => {
-    if (user) { return res.sendStatus(202); }
-    if ( !req.body.password ) { return res.sendStatus(204); }
+    if (user) {
+      return res.sendStatus(202);
+    }
+    if (!req.body.password) {
+      return res.sendStatus(204);
+    }
     // if we got to this point, we have a valid request to create a user in our database
-    const {username, password, firstname, lastname} = req.body;
-    const newUser = {username, password, firstname, lastname, email:username};
-    db.User.createUser( newUser, (err, user) => err ? res.sendStatus(409) : res.sendStatus(201) )
-  })
+    const { username, password, firstname, lastname } = req.body;
+    const newUser = {
+      username,
+      password,
+      firstname,
+      lastname,
+      email: username
+    };
+    db.User.createUser(
+      newUser,
+      (err, user) => (err ? res.sendStatus(409) : res.sendStatus(201))
+    );
+  });
 });
 
-// app.post('/signup', passport.authenticate('local-signup', {
-//          successRedirect: '/dashboard',
-//          failureRedirect: '/signup'
-//       }
-//   ));
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
+  db.User.validateLogin(username, password, (err, valid) => {
+    if (valid) {
+      res.sendStatus(200);
+    } else {
+      res.sendStatus(401);
+    }
+  });
+});
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}!`);

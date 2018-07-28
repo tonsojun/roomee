@@ -1,8 +1,6 @@
 const Sequelize = require('sequelize');
-var bCrypt = require('bcrypt-nodejs');
+const bCrypt = require('bcrypt-nodejs');
 
-// create the connection to database
-//if name is empty, you can create the db using sequelize
 const Op = Sequelize.Op;
 const operatorsAliases = { $like: Op.like };
 const sequelize = new Sequelize('roomee', 'root', null, {
@@ -16,30 +14,31 @@ const sequelize = new Sequelize('roomee', 'root', null, {
   }
 });
 
-sequelize.authenticate()
-  .then(() => console.log('Database connection has been established successfully.'))
+sequelize
+  .authenticate()
+  .then(() => console.log('Database connection has been established successfully.') )
   .catch(err => console.log('Unable to connect to the database:', err));
 
-  const User = sequelize.define('user', {
-    id: {
-      autoIncrement: true,
-      primaryKey: true,
-      type: Sequelize.INTEGER
-    },
-    firstname: Sequelize.STRING,
-    lastname: Sequelize.STRING,
-    username:  {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-    about: Sequelize.TEXT,
-    email: Sequelize.STRING,
-    password: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-    last_login: Sequelize.DATE
-  });
+const User = sequelize.define('user', {
+  id: {
+    autoIncrement: true,
+    primaryKey: true,
+    type: Sequelize.INTEGER
+  },
+  firstname: Sequelize.STRING,
+  lastname: Sequelize.STRING,
+  username: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  about: Sequelize.TEXT,
+  email: Sequelize.STRING,
+  password: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  last_login: Sequelize.DATE
+});
 
 const Listing = sequelize.define('listing', {
   id: {
@@ -90,9 +89,11 @@ Listing.createListing = (listing, callback) => {
     .then(data => {
       if (listing.photos.length > 0) {
         const listingResult = data;
-        const photos = listing.photos.map( url => {const p = { url, listingId: listingResult.id }; return p})
-        Photo.bulkCreate(photos)
-        .then (() => Listing.findListingsByID(listingResult.id, callback));
+        const photos = listing.photos.map(url => {
+          const p = { url, listingId: listingResult.id };
+          return p;
+        });
+        Photo.bulkCreate(photos).then(() => Listing.findListingsByID(listingResult.id, callback) );
       } else {
         callback(null, data);
       }
@@ -113,12 +114,17 @@ User.createUser = (newUser, callback) => {
     bCrypt.hash(newUser.password, salt, null, (err, hash) => {
       newUser.password = hash;
       User.create(newUser)
-      .then(data => callback(null, data))
-      .catch(err => callback(err, null));
-  })
+        .then(data => callback(null, data))
+        .catch(err => callback(err, null));
+    });
   });
 };
 
+User.validateLogin = (username, password, callback) => {
+  User.findOne({ where: { username } })
+    .then(data => bCrypt.compare(password, data.password, callback))
+    .catch(err => callback(err, null));
+};
 
 module.exports.sequelize = sequelize;
 module.exports.Listing = Listing;

@@ -1,4 +1,3 @@
-
 const Sequelize = require('sequelize');
 
 const sequelize = new Sequelize('roomee', 'root', null, {
@@ -6,30 +5,31 @@ const sequelize = new Sequelize('roomee', 'root', null, {
   dialect: 'mysql'
 });
 
-sequelize.authenticate()
-  .then(() => console.log('Database connection has been established successfully.'))
+sequelize
+  .authenticate()
+  .then(() => console.log('Database connection has been established successfully.') )
   .catch(err => console.log('Unable to connect to the database:', err));
 
-  const User = sequelize.define('user', {
-    id: {
-      autoIncrement: true,
-      primaryKey: true,
-      type: Sequelize.INTEGER
-    },
-    firstname: Sequelize.STRING,
-    lastname: Sequelize.STRING,
-    username:  {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-    about: Sequelize.TEXT,
-    email: Sequelize.STRING,
-    password: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-    last_login: Sequelize.DATE
-  });
+const User = sequelize.define('user', {
+  id: {
+    autoIncrement: true,
+    primaryKey: true,
+    type: Sequelize.INTEGER
+  },
+  firstname: Sequelize.STRING,
+  lastname: Sequelize.STRING,
+  username: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  about: Sequelize.TEXT,
+  email: Sequelize.STRING,
+  password: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  last_login: Sequelize.DATE
+});
 
 const Listing = sequelize.define('listing', {
   id: {
@@ -59,6 +59,6 @@ User.hasMany(Listing);
 Listing.hasMany(Photo);
 sequelize.sync({ force: true });
 
-setTimeout((function() {
+setTimeout(function() {
   return process.exit(0);
-}), 5000);
+}, 5000);
