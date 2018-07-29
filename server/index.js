@@ -38,8 +38,11 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 
+const isLoggedIn = (req, res, next) =>
+  req.isAuthenticated() ? next() : res.sendStatus(401);
+
 app.get('/searchListing', (req, res) => {
-  console.log(`get to searchlisting ========current user is >>${req.user}<< and this user authentication is >>${req.isAuthenticated()}<< ============`)
+  console.log(`get to searchlisting ========current user is >>${req.user}<< and this user authentication is >>${req.isAuthenticated()}<< ============`);
 
   let zip = req.param('zip');
   if (zip !== undefined) { zip = zip.substr(0, 3) + '__'; }
@@ -53,7 +56,7 @@ app.get('/searchListing', (req, res) => {
   });
 });
 
-app.post('/listing', (req, res) => {
+app.post('/listing', isLoggedIn, (req, res) => {
   console.log(`post to listing ========current user is >>${req.user}<< and this user authentication is >>${req.isAuthenticated()}<< ============`)
 
   db.Listing.createListing(req.body, (err, result) => {
@@ -76,6 +79,7 @@ app.get('/loginView', (req, res) => {
   res.redirect('localhost:3000/loginView');
 });
 
+
 app.get('/house', (req, res) => {
   // res.render('loginView');
   res.redirect('localhost:3000/house');
@@ -89,6 +93,11 @@ app.get('/search', (req, res) => {
 app.get('/signup', (req, res) => res.render('signup'));
 app.get('/loginView', (req, res) => res.render('login'));
 
+app.get('/logout', (req, res) => {
+  req.session.destroy(function(err) {
+    res.redirect('/');
+  });
+});
 /**
  * Create user will post to /signup for adding a user or to validate if username is available
  * post to signup will return
