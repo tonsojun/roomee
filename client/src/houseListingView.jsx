@@ -12,7 +12,7 @@ const HouseListingView = ({currentHouseView}) => (
         <p className="content">
           {currentHouseView.address + ' '}
           {currentHouseView.city + ', '}
-          {currentHouseView.state + ' '}
+          {currentHouseView.stateAbbr + ' '}
           {currentHouseView.zipCode}
         </p>
       </div>

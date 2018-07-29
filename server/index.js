@@ -92,10 +92,10 @@ app.get('/loginView', (req, res) => res.render('login'));
 app.post('/signup', (req, res) => {
   db.User.findbyUsername(req.body.username, (err, user) => {
     if (user) {
-      return res.sendStatus(202);
+      return res.status(202).redirect('/');
     }
     if (!req.body.password) {
-      return res.sendStatus(204);
+      return res.status(204).redirect('/signupview');
     }
     // if we got to this point, we have a valid request to create a user in our database
     const { username, password, firstname, lastname } = req.body;
@@ -108,7 +108,7 @@ app.post('/signup', (req, res) => {
     };
     db.User.createUser(
       newUser,
-      (err, user) => (err ? res.sendStatus(409) : res.sendStatus(201))
+      (err, user) => (err ? res.sendStatus(409) : res.status(201).redirect('/'))
     );
   });
 });
@@ -119,10 +119,10 @@ app.post('/login', (req, res) => {
     if (userid) {
       req.login(userid, err => {
         console.log(`========current user is >>${req.user}<< and this user authentication is >>${req.isAuthenticated()}<< ============`)
-        res.status(200).send(''+userid);
+        res.status(200).redirect('/');
       })
     } else {
-      res.sendStatus(401);
+      res.status(401).redirect('/loginView');
     }
   });
 });
