@@ -2,47 +2,38 @@ import React from 'react';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 
 const SignUpView = ({onSignUp}) => (
-  <div className="columns section level">
+  <div className="columns section level is-half is-offset-one-quarter">
+
     <form className="column level-item is-narrow is-offset-5" id="signUp" name="signUp" method="post" action="/signUp">
       <div className="field">
-        <label className="label" htmlFor="email">
-        Email Address:
-        </label>
-        <div className="control">
-          <input className="input text" name="email" type="email" />
-          {' '}
-        </div>
+          <label className="label">Email</label>
+          <div className="control has-icons-left">
+              <input className="input is-primary" type="email" name="username" placeholder="Email" />
+              <span className="icon is-small is-left"><i className="fas fa-envelope" /></span>
+          </div>
       </div>
       <div className="field">
-        <label className="label" htmlFor="firstname">
-          Firstname:
-        </label>
-        <div className="control">
-          <input className="input" name="firstname" type="text" />
-          {' '}
-        </div>
+          <label className="label">First Name</label>
+          <div className="control has-icons-left">
+              <input className="input " type="text" name="firstname" placeholder="First Name" />
+              <span className="icon is-small is-left"><i className="fas fa-user" /></span>
+          </div>
       </div>
       <div className="field">
-      <label className="label" htmlFor="lastname">
-      Lastname:
-      </label>
-      <div className="control">
-      <input className="input" name="lastname" type="text" />
-      {' '}
-      </div>
+          <label className="label">Last Name</label>
+          <div className="control has-icons-left">
+              <input className="input " type="text" name="lastname" placeholder="Last Name" />
+              <span className="icon is-small is-left"><i className="fas fa-user" /></span>
+          </div>
       </div>
       <div className="field">
-      <label className="label" htmlFor="password">
-      Password:
-      </label>
-      <div className="control">
-      <input className="input" name="password" type="password" />
-      {' '}
+          <label className="label">Password</label>
+          <div className="control has-icons-left">
+              <input className="input" type="password" name="password" placeholder="Password" />
+              <span className="icon is-small is-left"><i className="fas fa-lock" /></span>
+          </div>
       </div>
-      </div>
-      <Link to="/loginView" style={{ textDecoration: 'none', color: '#888' }}>
-        <input onClick={onSignUp} className="btn button" type="submit" value="Sign Up" />
-      </Link>
+      <input className="button is-link" type="submit" value="Sign Up" />
     </form>
   </div>
 );

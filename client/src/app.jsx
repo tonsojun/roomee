@@ -18,66 +18,41 @@ export default class App extends React.Component {
       justRegistered: false
     };
     this.onSubmitPost = this.onSubmitPost.bind(this);
+    this.onSearch = this.onSearch.bind(this);
+    this.searchByZipCode = this.searchByZipCode.bind(this);
+    this.onSignUp = this.onSignUp.bind(this);
   }
   /*  ******** axios Requests **********/
 
   componentDidMount () {
-    // get request fetches the zipcod of the user's IP address and calls onEnterSite
+    // get request fetches the zipcode of the user's IP address and calls onEnterSite
     axios.get('http://ip-api.com/json')
-      .then((response) => {
-        this.searchByIpZipCode(response.data.zip);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      .then(response => this.searchByZipCode(response.data.zip))
+      .catch(err => console.log(err));
   }
 
-  searchByIpZipCode (zipCode) {
+  searchByZipCode (zipCode) {
     // get request queries databse for all listings matching the user's ip address zipcode
     axios.get('/searchListing', { params: { zip: zipCode } })
-      .then((res) => {
-        this.setState({
-          listings: res.data
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      .then(res => this.setState( { listings: res.data } ) )
+      .catch((err) => console.log(err) );
   }
 
   onSearch (event) {
     event.preventDefault();
-    const { term } = this.state;
-    axios.get('/searchListing', { params: { zip: term } })
-      .then((res) => {
-         // console.log(`-------> Folowing data returned from server GET -> ${res}`);
-        //  is res.data or res an array?
-        this.setState({
-          listings : res.data
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    this.searchByZipCode(this.state.term);
   }
 
   onSubmitPost (newListingData) {
     //to populate the /house view
     //may want to refactor into two separate handlers
-    this.setState({
-      currentHouseView: newListingData
-    })
-
+    this.setState( { currentHouseView: newListingData } )
     //post request to server
     axios.post('/listing', newListingData)
       .then((res) => {
         // console.log(`-------> Folowing data returned from server POST -> ${res}`)
       })
-      .catch((err) => {
-        if (err) {
-          throw err;
-        }
-      });
+      .catch(err => {throw err;} );
   }
 
   /*  ******** axios Requests **********/
@@ -85,12 +60,7 @@ export default class App extends React.Component {
   /* ******** Helpers and Events **********/
 
   onInput (e) {
-    this.setState({
-      term: e.target.value
-    });
-    // setTimeout(() => {
-    //   console.log(this.state.term, 'term from app');
-    // }, 1000);
+    this.setState({ term: e.target.value });
   }
 
   onTitleClick (item) {
@@ -115,68 +85,27 @@ export default class App extends React.Component {
 
   render () {
     //passing props to views with routes
-    const renderHouseListingView = (props) => {
-      return (
-        <HouseListingView
-        currentHouseView={this.state.currentHouseView}
-        />
-        )
-    }
-
-    const renderSignUpView = (props) => {
-      return (
-        <SignUpView
-        onSignUp={this.onSignUp.bind(this)}
-        />
-        )
-    }
-
-    const renderLoginView = (props) => {
-      return (
-        <LoginView
-        registered={this.state.justRegistered}
-        />
-        )
-    }
-
-    const renderSearchView = (props) => {
-      return (
+    const renderHouseListingView = (props) => (<HouseListingView currentHouseView={this.state.currentHouseView} />);
+    const renderSignUpView = (props) => (<SignUpView onSignUp={this.onSignUp} />);
+    const renderLoginView = (props) => (<LoginView registered={this.state.justRegistered} />);
+    const renderCreateListingView = (props) => (<CreateListingView onSubmit={this.onSubmitPost} />);
+    const renderSearchView = (props) => (
         <SearchView
           onInput={this.onInput.bind(this)}
           value={this.state.term}
           listings={this.state.listings}
           onSearch={this.onSearch.bind(this)}
           onTitleClick={this.onTitleClick.bind(this)}
-          // {...props}
         />
       );
-    };
-
-    const renderCreateListingView = (props) => {
-      return (
-        <CreateListingView
-          onSubmit={this.onSubmitPost}
-          // {...props}
-        />
-      );
-    };
-
-    const renderHome = (props) => {
-      return (
+    const Home = () => (
         <section className="hero is-medium is-primary">
-            <div className="hero-body">
-              <div className="container">
-                <h1 className="title">
-                Welcome to Roomee
-                </h1>
-                <h2 className="subtitle">
-                we're not craigstlist
-                </h2>
-              </div>
-            </div>
-          </section>
+          <div className="hero-body">
+              <h1 className="title is-1">Welcome to Roomee</h1>
+              <h2 className="subtitle is-2">we're not craigstlist</h2>
+          </div>
+        </section>
       );
-    };
 
     return (
       <Router>
@@ -184,50 +113,22 @@ export default class App extends React.Component {
           <h1 className="level-item title has-text-centered is-medium">
           Roomee
           </h1>
-          <nav className="level container">
-            <Link to="/" style={{ textDecoration: 'none', color: '#888' }}>
-              <h4 className="level-item has-text-centered heading">
-              Home
-              </h4>
-            </Link>
-
-
-            <Link to="/search" style={{ textDecoration: 'none', color: '#888' }}>
-              <h4 className="level-item has-text-centered heading">
-              Search
-              </h4>
-            </Link>
-            <Link to="/createListing" style={{ textDecoration: 'none', color: '#888' }}>
-              <h4 className="level-item has-text-centered heading">
-              New Listing
-              </h4>
-            </Link>
-
-            <Link to="/loginView" style={{ textDecoration: 'none', color: '#888' }}>
-              <h4 className="level-item has-text-centered heading">
-              Login
-              </h4>
-            </Link>
-
-            <Link to="/signUpView" style={{ textDecoration: 'none', color: '#888' }}>
-              <h4 className="level-item has-text-centered heading">
-              Sign Up
-              </h4>
-            </Link>
+          <nav className="level container has-text-centered title is-6">
+            <Link to="/" className="level-item">Home</Link>
+            <Link to="/search" className="level-item">Search</Link>
+            <Link to="/createListing" className="level-item">New Listing</Link>
+            <Link to="/loginView" className="level-item">Login</Link>
+            <Link to="/signUpView" className="level-item">Sign Up</Link>
           </nav>
 
-          <Route exact path="/" render={renderHome} />
+          <Route exact path="/" component={Home} />
           <Route path="/search" render={renderSearchView} />
           <Route path="/createListing" render={renderCreateListingView} />
           <Route path="/loginView" render={renderLoginView} />
           <Route path="/signUpView" render={renderSignUpView} />
           <Route path="/house" render={renderHouseListingView} />
 
-          <footer className="footer">
-            <div className="content has-text-centered">
-              <h6 className="title">by the roomee project</h6>
-            </div>
-          </footer>
+          <footer className="footer has-text-centered heading is-6">by the roomee project</footer>
         </div>
       </Router>
     );

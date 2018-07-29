@@ -12,7 +12,8 @@ const SearchView = ({term, listings, onInput, onSearch, onTitleClick}) => (
       </button>
     </div>
     <div>
-      {listings.map((item) =>
+      {!listings.length ? <div className="has-text-centered title is-4">Sorry, no results found in this area</div> :
+        listings.map((item) =>
         <SearchResultView
           onTitleClick={onTitleClick}
           listing={item}
