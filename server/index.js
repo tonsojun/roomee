@@ -19,14 +19,20 @@ app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
-// for parsing application/x-www-form-urlencode app.use(multer());
-// for parsing multipart/form-data
 
+app.use(session({
+  secret: 'luihfihuiluihiluh34hhglihlse893423rlhfsdiheiiqlqkbcsaajblaeww43232er3',
+  resave: false, //             resave - false means do not save back to the store unless there is a change
+  saveUninitialized: false //  saveuninitialized false - don't create a session unless it is a logged in user
+  // cookie: { secure: false }
+}))
 // initialize passport and the express sessions and passport sessions
-// app.use(passport.initialize());
-// app.use(passport.session()); // persistent login sessions
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
 
 app.get('/searchListing', (req, res) => {
+  console.log(`get to searchlisting ========current user is >>${req.user}<< and this user authentication is >>${req.isAuthenticated()}<< ============`)
+
   let zip = req.param('zip');
   if (zip !== undefined) { zip = zip.substr(0, 3) + '__'; }
   const queryStr = zip ? { where: { zipCode: { $like: zip } } } : {};
@@ -40,6 +46,8 @@ app.get('/searchListing', (req, res) => {
 });
 
 app.post('/listing', (req, res) => {
+  console.log(`post to listing ========current user is >>${req.user}<< and this user authentication is >>${req.isAuthenticated()}<< ============`)
+
   db.Listing.createListing(req.body, (err, result) => {
     if (err) {
       res.sendStatus(500);
@@ -107,14 +115,30 @@ app.post('/signup', (req, res) => {
 
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
-  db.User.validateLogin(username, password, (err, valid) => {
-    if (valid) {
-      res.sendStatus(200);
+  db.User.validateLogin(username, password, (err, userid) => {
+    if (userid) {
+      req.login(userid, err => {
+        console.log(`========current user is >>${req.user}<< and this user authentication is >>${req.isAuthenticated()}<< ============`)
+        res.status(200).send(''+userid);
+      })
     } else {
       res.sendStatus(401);
     }
   });
 });
+
+app.get('/', function(req, res) {
+  console.log(`HOME SCREEN ========current user is >>${req.user}<< and this user authentication is >>${req.isAuthenticated()}<< ============`)
+  res.render('home', {title: 'Roomee'});
+});
+
+passport.serializeUser(function(userid, done) {
+  done(null, userid);
+});
+passport.deserializeUser(function(userid, done) {
+  done(null, userid);
+})
+
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}!`);

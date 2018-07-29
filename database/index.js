@@ -122,9 +122,16 @@ User.createUser = (newUser, callback) => {
 
 User.validateLogin = (username, password, callback) => {
   User.findOne({ where: { username } })
-    .then(data => bCrypt.compare(password, data.password, callback))
+    .then(data => bCrypt.compare(password, data.password, (err, result) => {
+      if (err) {
+        callback(err, null);
+      } else {
+        callback(null, result ? data.id : false);
+      }
+    } ))
     .catch(err => callback(err, null));
 };
+
 
 module.exports.sequelize = sequelize;
 module.exports.Listing = Listing;
