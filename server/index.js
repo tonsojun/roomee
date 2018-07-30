@@ -30,8 +30,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({
   secret: 'luihfihuiluihiluh34hhglihlse893423rlhfsdiheiiqlqkbcsaajblaeww43232er3',
   resave: false, //             resave - false means do not save back to the store unless there is a change
-  saveUninitialized: false //  saveuninitialized false - don't create a session unless it is a logged in user
-  // cookie: { secure: false }
+  saveUninitialized: false, //  saveuninitialized false - don't create a session unless it is a logged in user
+  cookie: { expires: 24 * 60 * 60 * 1000 }
 
 }))
 // initialize passport and the express sessions and passport sessions
@@ -94,7 +94,8 @@ app.get('/signup', (req, res) => res.render('signup'));
 app.get('/loginView', (req, res) => res.render('login'));
 
 app.get('/logout', (req, res) => {
-  req.session.destroy(function(err) {
+req.session.destroy(function() {
+    res.clearCookie('connect.sid');
     res.redirect('/');
   });
 });
@@ -109,7 +110,7 @@ app.get('/logout', (req, res) => {
 app.post('/signup', (req, res) => {
   db.User.findbyUsername(req.body.username, (err, user) => {
     if (user) {
-      return res.status(202).redirect('/');
+      return res.status(202).redirect('/signupview');
     }
     if (!req.body.password) {
       return res.status(204).redirect('/signupview');

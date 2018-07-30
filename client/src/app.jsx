@@ -102,7 +102,7 @@ export default class App extends React.Component {
         <section className="hero is-medium is-primary">
           <div className="hero-body">
               <h1 className="title is-1">Welcome to Roomee</h1>
-              <h2 className="subtitle is-2">we're not craigstlist</h2>
+              <h2 className="subtitle is-2">we're not craigslist</h2>
           </div>
         </section>
       );
