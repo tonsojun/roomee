@@ -6,9 +6,16 @@ const passport = require('passport');
 const db = require('../database/index.js');
 const env = require('dotenv').config();
 
+// const passportLocal = require('passport-local');
+// const exphbs = require('express-handlebars');
+
 const PORT = process.env.PORT || 3000;
 
 const app = express();
+const cookieparser = require('cookie-parser')
+// const models = require("../database/models");
+// const authRoute = require('../database/passport_routes/auth.js')(app,passport);
+// const passportStrat = require('../database/passport/passport.js')(passport, models.user);
 
 // const models = require('../database/models');
 // const authRoute = require('../database/passport_routes/auth.js')(app,passport);
@@ -25,13 +32,17 @@ app.use(session({
   resave: false, //             resave - false means do not save back to the store unless there is a change
   saveUninitialized: false //  saveuninitialized false - don't create a session unless it is a logged in user
   // cookie: { secure: false }
+
 }))
 // initialize passport and the express sessions and passport sessions
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 
+const isLoggedIn = (req, res, next) =>
+  req.isAuthenticated() ? next() : res.sendStatus(401);
+
 app.get('/searchListing', (req, res) => {
-  console.log(`get to searchlisting ========current user is >>${req.user}<< and this user authentication is >>${req.isAuthenticated()}<< ============`)
+  console.log(`get to searchlisting ========current user is >>${req.user}<< and this user authentication is >>${req.isAuthenticated()}<< ============`);
 
   let zip = req.param('zip');
   if (zip !== undefined) { zip = zip.substr(0, 3) + '__'; }
@@ -45,7 +56,7 @@ app.get('/searchListing', (req, res) => {
   });
 });
 
-app.post('/listing', (req, res) => {
+app.post('/listing', isLoggedIn, (req, res) => {
   console.log(`post to listing ========current user is >>${req.user}<< and this user authentication is >>${req.isAuthenticated()}<< ============`)
 
   db.Listing.createListing(req.body, (err, result) => {
@@ -68,6 +79,7 @@ app.get('/loginView', (req, res) => {
   res.redirect('localhost:3000/loginView');
 });
 
+
 app.get('/house', (req, res) => {
   // res.render('loginView');
   res.redirect('localhost:3000/house');
@@ -81,6 +93,11 @@ app.get('/search', (req, res) => {
 app.get('/signup', (req, res) => res.render('signup'));
 app.get('/loginView', (req, res) => res.render('login'));
 
+app.get('/logout', (req, res) => {
+  req.session.destroy(function(err) {
+    res.redirect('/');
+  });
+});
 /**
  * Create user will post to /signup for adding a user or to validate if username is available
  * post to signup will return
@@ -138,7 +155,6 @@ passport.serializeUser(function(userid, done) {
 passport.deserializeUser(function(userid, done) {
   done(null, userid);
 })
-
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}!`);
