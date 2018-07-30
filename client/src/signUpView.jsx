@@ -33,9 +33,7 @@ const SignUpView = ({onSignUp}) => (
               <span className="icon is-small is-left"><i className="fas fa-lock" /></span>
           </div>
       </div>
-       <Link to="/loginView" style={{ textDecoration: 'none', color: '#888' }}>
       <input onClick={onSignUp} className="button is-primary" type="submit" value="Sign Up" />
-      </Link>
     </form>
   </div>
 );
