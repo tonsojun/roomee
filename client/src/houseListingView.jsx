@@ -27,6 +27,7 @@ const HouseListingView = ({currentHouseView}) => (
         </div>
       <div>
         <h4 className="heading">Contact</h4>
+        <p><a>Email</a></p>
       </div>
     </div>
     <div className="column">

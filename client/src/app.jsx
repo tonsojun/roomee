@@ -21,8 +21,11 @@ export default class App extends React.Component {
     this.onSearch = this.onSearch.bind(this);
     this.searchByZipCode = this.searchByZipCode.bind(this);
     this.onSignUp = this.onSignUp.bind(this);
+    this.onTitleClick = this.onTitleClick.bind(this);
+    this.onInput = this.onInput.bind(this);
   }
-  /*  ******** axios Requests **********/
+
+  /* ******** Helpers and Events **********/
 
   componentDidMount () {
     // get request fetches the zipcode of the user's IP address and calls onEnterSite
@@ -31,49 +34,19 @@ export default class App extends React.Component {
       .catch(err => console.log(err));
   }
 
-  searchByZipCode (zipCode) {
-    // get request queries databse for all listings matching the user's ip address zipcode
-    axios.get('/searchListing', { params: { zip: zipCode } })
-      .then(res => this.setState( { listings: res.data } ) )
-      .catch((err) => console.log(err) );
-  }
-
-  onSearch (event) {
-    event.preventDefault();
-    this.searchByZipCode(this.state.term);
-  }
-
-  onSubmitPost (newListingData) {
-    //to populate the /house view
-    //may want to refactor into two separate handlers
-    this.setState( { currentHouseView: newListingData } )
-    //post request to server
-    axios.post('/listing', newListingData)
-      .then((res) => {
-        // console.log(`-------> Folowing data returned from server POST -> ${res}`)
-      })
-      .catch(err => {throw err;} );
-  }
-
-  /*  ******** axios Requests **********/
-
-  /* ******** Helpers and Events **********/
-
   onInput (e) {
     this.setState({ term: e.target.value });
   }
 
   onTitleClick (item) {
+    // populate houselistingview with data from searchresult view
     this.setState({
       currentHouseView: item
-    })
-    setTimeout(() => {
-      console.log(this.state.currentHouseView, 'currentHouseView from app');
-    }, 1000);
+    });
   }
 
   onSignUp (e) {
-    //give user a human way to know they have registered
+    // give user a human way to know they have registered
     this.setState({
       justRegistered: true
     });
@@ -81,31 +54,73 @@ export default class App extends React.Component {
 
   /* ******** Helpers and Events **********/
 
+  /*  ******** axios Requests **********/
+
+  onSearch (event) {
+    event.preventDefault();
+    this.searchByZipCode(this.state.term);
+  }
+
+  onSubmitPost (newListingData) {
+    // create new house listing in db
+    this.setState( { currentHouseView: newListingData } )
+    // post request to server
+    axios.post('/listing', newListingData)
+      .then((res) => {
+        // console.log(`-------> Folowing data returned from server POST -> ${res}`)
+      })
+      .catch(err => console.log(err));
+  }
+
+  searchByZipCode (zipCode) {
+    // get request queries databse for all listings matching the user's ip address zipcode
+    axios.get('/searchListing', { params: { zip: zipCode } })
+      .then(res => this.setState({ listings: res.data }))
+      .catch(err => console.log(err) );
+  }
+
+  /*  ******** axios Requests **********/
+
   /* ******** Render **********/
 
   render () {
-    //passing props to views with routes
-    const renderHouseListingView = (props) => (<HouseListingView currentHouseView={this.state.currentHouseView} />);
-    const renderSignUpView = (props) => (<SignUpView onSignUp={this.onSignUp} />);
-    const renderLoginView = (props) => (<LoginView registered={this.state.justRegistered} />);
-    const renderCreateListingView = (props) => (<CreateListingView onSubmit={this.onSubmitPost} />);
-    const renderSearchView = (props) => (
-        <SearchView
-          onInput={this.onInput.bind(this)}
-          value={this.state.term}
-          listings={this.state.listings}
-          onSearch={this.onSearch.bind(this)}
-          onTitleClick={this.onTitleClick.bind(this)}
-        />
-      );
+    // passing props to views with routes
+    const renderHouseListingView = props => (
+      <HouseListingView
+        currentHouseView={this.state.currentHouseView}
+      />);
+    const renderSignUpView = props => (
+      <SignUpView
+        onSignUp={this.onSignUp}
+      />);
+    const renderLoginView = props => (
+      <LoginView
+        registered={this.state.justRegistered}
+      />);
+    const renderCreateListingView = props => (
+      <CreateListingView
+        onSubmit={this.onSubmitPost}
+      />);
+    const renderSearchView = props => (
+      <SearchView
+        onInput={this.onInput}
+        value={this.state.term}
+        listings={this.state.listings}
+        onSearch={this.onSearch}
+        onTitleClick={this.onTitleClick}
+      />);
     const Home = () => (
-        <section className="hero is-medium is-primary">
-          <div className="hero-body">
-              <h1 className="title is-1">Welcome to Roomee</h1>
-              <h2 className="subtitle is-2">We're not craigslist.</h2>
-          </div>
-        </section>
-      );
+      <section className="hero is-medium is-primary">
+        <div className="hero-body">
+          <h1 className="title is-1">
+          Welcome to Roomee
+          </h1>
+          <h2 className="subtitle is-2">
+          We're not craigslist.
+          </h2>
+        </div>
+      </section>
+    );
 
     return (
       <Router>
@@ -114,11 +129,21 @@ export default class App extends React.Component {
           Roomee
           </h1>
           <nav className="level container has-text-centered heading is-6">
-            <Link to="/" className="level-item">Home</Link>
-            <Link to="/search" className="level-item">Search</Link>
-            <Link to="/createListing" className="level-item">New Listing</Link>
-            <Link to="/loginView" className="level-item">Login</Link>
-            <Link to="/signUpView" className="level-item">Sign Up</Link>
+            <Link to="/" className="level-item">
+            Home
+            </Link>
+            <Link to="/search" className="level-item">
+            Search
+            </Link>
+            <Link to="/createListing" className="level-item">
+            New Listing
+            </Link>
+            <Link to="/loginView" className="level-item">
+            Login
+            </Link>
+            <Link to="/signUpView" className="level-item">
+            Sign Up
+            </Link>
           </nav>
 
           <Route exact path="/" component={Home} />
@@ -128,7 +153,9 @@ export default class App extends React.Component {
           <Route path="/signUpView" render={renderSignUpView} />
           <Route path="/house" render={renderHouseListingView} />
 
-          <footer className="footer has-text-centered heading is-6">by the roomee project</footer>
+          <footer className="footer has-text-centered heading is-6">
+          by the roomee project
+          </footer>
         </div>
       </Router>
     );
