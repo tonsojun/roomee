@@ -23,15 +23,16 @@ const HouseListingView = ({currentHouseView}) => (
       <div>
         <h6 className="heading">Description</h6>
         <p className="content">
-        {currentHouseView.description}</p>
+        {currentHouseView.descriptionTextbox}</p>
         </div>
       <div>
         <h4 className="heading">Contact</h4>
+        <a>Email</a>
       </div>
     </div>
     <div className="column">
         {currentHouseView.photos.map((photo,ind) => {
-            const arr = photo.url.split('upload/');
+            const arr = photo.split('upload/');
             const uploadWidth = 'upload/w_412,c_scale/';
             const resizedPhotoUrl = arr.join(uploadWidth);
             return (<img src={resizedPhotoUrl} alt="picture of room for rent" key={ind}></img>)

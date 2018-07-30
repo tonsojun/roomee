@@ -86,7 +86,7 @@ class CreateListingView extends React.Component {
       <section className="section">
         <div id="create-listing" className="columns">
           <div className="column is-half is-offset-one-quarter">
-            <h4 className="title">
+            <h4 className="subtitle">
             Create Your Listing:
             </h4>
             <div className="field">
@@ -94,7 +94,7 @@ class CreateListingView extends React.Component {
               Title:
               </label>
               <div className="control">
-                <input className="input" id="title" value={this.title} onChange={this.onChange} />
+                <input className="input is-normal" id="title" value={this.title} onChange={this.onChange} />
                 <p className="help">
                   What do you want to call your listing?
                 </p>
@@ -162,7 +162,7 @@ class CreateListingView extends React.Component {
               </div>
               <aside>
                 <h2>
-                Dropped files
+                {this.state.photos.length} File(s) Uploaded
                 </h2>
                 <ul>
                   {
