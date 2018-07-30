@@ -102,7 +102,7 @@ export default class App extends React.Component {
         <section className="hero is-medium is-primary">
           <div className="hero-body">
               <h1 className="title is-1">Welcome to Roomee</h1>
-              <h2 className="subtitle is-2">we're not craigslist</h2>
+              <h2 className="subtitle is-2">We're not craigslist.</h2>
           </div>
         </section>
       );
@@ -113,7 +113,7 @@ export default class App extends React.Component {
           <h1 className="level-item title has-text-centered is-medium">
           Roomee
           </h1>
-          <nav className="level container has-text-centered title is-6">
+          <nav className="level container has-text-centered heading is-6">
             <Link to="/" className="level-item">Home</Link>
             <Link to="/search" className="level-item">Search</Link>
             <Link to="/createListing" className="level-item">New Listing</Link>
