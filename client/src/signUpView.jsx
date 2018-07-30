@@ -33,7 +33,7 @@ const SignUpView = ({onSignUp}) => (
               <span className="icon is-small is-left"><i className="fas fa-lock" /></span>
           </div>
       </div>
-      <input className="button is-link" type="submit" value="Sign Up" />
+      <input className="button is-primary" type="submit" value="Sign Up" />
     </form>
   </div>
 );

@@ -2,11 +2,11 @@ import React from 'react';
 import SearchResultView from './searchResultView.jsx';
 
 const SearchView = ({term, listings, onInput, onSearch, onTitleClick}) => (
-  <div >
-    <div class="columns is-multiline is-mobile is-centered control">
-      <input class="column is-one-quarter input is-small" style={{ textAlign: 'center' }}
+  <div>
+    <div className="columns level is-multiline is-mobile is-centered control">
+      <input className="column level-item is-one-quarter input is-small" style={{ textAlign: 'center' }}
       type="text" value={term} onChange={onInput} placeholder="Zip Code" />
-      <button className="button is-small" style={{ textAlign: 'center' }}
+      <button className="button is-small is-primary" style={{ textAlign: 'center' }}
       type="submit" onClick={onSearch} >
       Search
       </button>
