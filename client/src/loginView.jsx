@@ -23,7 +23,7 @@ const LoginView = ({registered}) => (
             </div>
         </div>
         <div>
-            <input className="button is-link" type="submit" value="Log In" />
+            <input className="button is-primary" type="submit" value="Log In" />
         </div>
     </form>
 );

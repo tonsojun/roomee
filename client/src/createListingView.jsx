@@ -180,7 +180,7 @@ class CreateListingView extends React.Component {
             </section>
             <div className="field">
               <div className="control">
-                <button className="button is-link"
+                <button className="button is-primary"
                   type="submit"
                   onClick={() => {
                     this.props.onSubmit(this.state);
