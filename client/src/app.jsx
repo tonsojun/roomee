@@ -113,6 +113,7 @@ export default class App extends React.Component {
           <h1 className="level-item title has-text-centered is-medium">
           Roomee
           </h1>
+          {/* React router routes*/}
           <nav className="level container has-text-centered heading is-6">
             <Link to="/" className="level-item">Home</Link>
             <Link to="/search" className="level-item">Search</Link>
