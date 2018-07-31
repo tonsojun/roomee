@@ -14,7 +14,7 @@ class CreateListingView extends React.Component {
       stateAbbr: '',
       zipCode: '',
       price: '',
-      descriptionTextbox: '',
+      description: '',
       photos: [],
       redirect: false,
     };
@@ -23,21 +23,21 @@ class CreateListingView extends React.Component {
     this.setRedirect = this.setRedirect.bind(this);
 
     const {
-      title, stateAbbr, address, city, zipCode, price, descriptionTextbox, photos
+      title, stateAbbr, address, city, zipCode, price, description, photos
     } = this.state;
   }
 
   onChange (event) {
+    // the id tag of each form field is used as the property of the state object
     const change = {};
     change[event.target.id] = event.target.value;
     this.setState(change);
-    setTimeout(() => {
-      console.log(this.state);
-    }, 1000);
   }
 
+  // this function uploads all files dropped into the the DropZone to Cloudinary, more info here:
+  // https://tinyurl.com/y873sr55
   onDrop (files) {
-    // Push all the axios request promise into a single array
+    // Push all the axios request promises into a single array
     const uploaders = files.map(file => {
       // Initial FormData
       const formData = new FormData();
@@ -45,7 +45,9 @@ class CreateListingView extends React.Component {
       formData.append("tags", `codeinfuse, medium, gist`);
       // Replace the preset name with your own
       formData.append("upload_preset", API.cloudinaryPresetName);
-      formData.append("api_key", API.cloudinaryKey); // Replace API key with your own Cloudinary key
+      // Replace API key with your own Cloudinary key
+      // images are hosted on Cloudinary, you can set up your own free account
+      formData.append("api_key", API.cloudinaryKey);
       formData.append("timestamp", (Date.now() / 1000) | 0);
 
       // Make an AJAX upload request using Axios (replace Cloudinary URL below with your own)
@@ -53,13 +55,15 @@ class CreateListingView extends React.Component {
         headers: { "X-Requested-With": "XMLHttpRequest" },
       }).then(response => {
         const data = response.data;
-        const fileURL = data.secure_url // You should store this URL for future references in your app
+        const fileURL = data.secure_url
         this.state.photos.push(fileURL)
-        console.log(data);
       })
     });
+
     // Once all the files are uploaded
     axios.all(uploaders).then(() => {
+      // while we are only saving files photo urls to state and passing those to our database, a user
+      // could presently upload an unlimited amount of image files to our Cloudinary account
       const photos = this.state.photos.slice(-5);
       this.setState({
         photo1: photos[0],
@@ -72,6 +76,8 @@ class CreateListingView extends React.Component {
   }
 
   setRedirect () {
+    // invoked when the submit button is clicked to redirect user to /house endpoint which renders
+    // the houseListingView component
     this.setState({
       redirect: true
     });
@@ -86,7 +92,7 @@ class CreateListingView extends React.Component {
       <section className="section">
         <div id="create-listing" className="columns">
           <div className="column is-half is-offset-one-quarter">
-            <h4 className="title">
+            <h4 className="subtitle">
             Create Your Listing:
             </h4>
             <div className="field">
@@ -94,7 +100,7 @@ class CreateListingView extends React.Component {
               Title:
               </label>
               <div className="control">
-                <input className="input" id="title" value={this.title} onChange={this.onChange} />
+                <input className="input is-normal" id="title" value={this.title} onChange={this.onChange} />
                 <p className="help">
                   What do you want to call your listing?
                 </p>
@@ -144,11 +150,12 @@ class CreateListingView extends React.Component {
               </label>
               <div className="control">
 
-                <input className="input" id="descriptionTextbox" value={this.description} onChange={this.onChange} />
+                <input className="input" id="description" value={this.description} onChange={this.onChange} />
               </div>
             </div>
             <section>
               <div className="dropzone">
+                {/* https://www.npmjs.com/package/react-dropzone */}
                 <Dropzone
                   onDrop={this.onDrop}
                   multiple
@@ -162,7 +169,7 @@ class CreateListingView extends React.Component {
               </div>
               <aside>
                 <h2>
-                Dropped files
+                {this.state.photos.length} File(s) Uploaded
                 </h2>
                 <ul>
                   {
@@ -184,7 +191,7 @@ class CreateListingView extends React.Component {
                   type="submit"
                   onClick={() => {
                     this.props.onSubmit(this.state);
-                    this.setRedirect()
+                    this.setRedirect();
                   }}
                 >
                   Create Listing
