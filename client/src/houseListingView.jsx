@@ -29,8 +29,8 @@ const HouseListingView = ({currentHouseView}) => (
         </div>
       <div>
         <h4 className="heading">Contact</h4>
-        currently hardcoded but this should be dynamically rendered if/when user accounts are set up
         <a>Email</a>
+        <p><a>Email</a></p>
       </div>
     </div>
     <div className="column">
