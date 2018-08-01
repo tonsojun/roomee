@@ -9,7 +9,7 @@ const env = require('dotenv').config();
 // const passportLocal = require('passport-local');
 // const exphbs = require('express-handlebars');
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 
 const app = express();
 const cookieparser = require('cookie-parser')
