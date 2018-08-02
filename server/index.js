@@ -9,7 +9,7 @@ const env = require('dotenv').config();
 // const passportLocal = require('passport-local');
 // const exphbs = require('express-handlebars');
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 3000;
 
 const app = express();
 const cookieparser = require('cookie-parser')
@@ -81,7 +81,7 @@ app.get('/loginView', (req, res) => {
 
 
 app.get('/house', (req, res) => {
-  // res.render('loginView');
+  //res.render('loginView');
   res.redirect('localhost:3000/house');
 });
 
@@ -147,12 +147,13 @@ app.post('/login', (req, res) => {
 
 app.get('/', function(req, res) {
   console.log(`HOME SCREEN ========current user is >>${req.user}<< and this user authentication is >>${req.isAuthenticated()}<< ============`)
-  res.render('home', {title: 'Roomee'});
+  res.render('home', {title: 'Roomee change the title'});
 });
 
 passport.serializeUser(function(userid, done) {
   done(null, userid);
 });
+
 passport.deserializeUser(function(userid, done) {
   done(null, userid);
 })

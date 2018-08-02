@@ -15,7 +15,9 @@ export default class App extends React.Component {
       term: '',
       listings: [],
       currentHouseView: {},
-      justRegistered: false
+      justRegistered: false,
+      showLogin: true
+
     };
     this.onSubmitPost = this.onSubmitPost.bind(this);
     this.onSearch = this.onSearch.bind(this);
@@ -53,7 +55,6 @@ export default class App extends React.Component {
   }
 
   /* ******** Helpers and Events **********/
-
   /*  ******** axios Requests **********/
 
   onSearch (event) {
@@ -80,7 +81,6 @@ export default class App extends React.Component {
   }
 
   /*  ******** axios Requests **********/
-
   /* ******** Render **********/
 
   render () {
@@ -97,6 +97,7 @@ export default class App extends React.Component {
       <LoginView
         registered={this.state.justRegistered}
       />);
+      
     const renderCreateListingView = props => (
       <CreateListingView
         onSubmit={this.onSubmitPost}
@@ -123,27 +124,30 @@ export default class App extends React.Component {
     );
 
     return (
+
       <Router>
         <div className="hero">
           <h1 className="level-item title has-text-centered is-medium">
-          Roomee
+            Roomee
           </h1>
           {/* React router routes*/}
           <nav className="level container has-text-centered heading is-6">
             <Link to="/" className="level-item">
-            Home
+              Home
             </Link>
             <Link to="/search" className="level-item">
-            Search
+              Search
             </Link>
             <Link to="/createListing" className="level-item">
-            New Listing
+              New Listing
             </Link>
             <Link to="/loginView" className="level-item">
-            Login
+              { 
+                this.state.showLogin === true ? "Login": ""
+              }
             </Link>
             <Link to="/signUpView" className="level-item">
-            Sign Up
+              Sign Up
             </Link>
           </nav>
 

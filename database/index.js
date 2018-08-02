@@ -3,7 +3,7 @@ const bCrypt = require('bcrypt-nodejs');
 
 const Op = Sequelize.Op;
 const operatorsAliases = { $like: Op.like };
-const sequelize = new Sequelize('roomee', 'root', 'password', {
+const sequelize = new Sequelize('roomee', 'root', '', {
   host: 'localhost',
   dialect: 'mysql',
   pool: {
