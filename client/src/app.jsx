@@ -7,6 +7,7 @@ import LoginView from './loginView.jsx';
 import SignUpView from './signUpView.jsx';
 import CreateListingView from './createListingView.jsx';
 import HouseListingView from './houseListingView.jsx';
+import Footer from './footer.jsx';
 
 export default class App extends React.Component {
   constructor (props) {
@@ -120,10 +121,13 @@ export default class App extends React.Component {
           </h2>
         </div>
       </section>
-    );
-
-    return (
-      <Router>
+      );
+      
+      
+      
+      
+      return (
+        <Router>
         <div className="hero">
           <h1 className="level-item title has-text-centered is-medium">
           Roomee
@@ -154,9 +158,7 @@ export default class App extends React.Component {
           <Route path="/signUpView" render={renderSignUpView} />
           <Route path="/house" render={renderHouseListingView} />
 
-          <footer className="footer has-text-centered heading is-6">
-          by the roomee project
-          </footer>
+          <Footer />
         </div>
       </Router>
     );
@@ -164,3 +166,7 @@ export default class App extends React.Component {
 
   /* ******** Render **********/
 }
+
+          // <footer className="footer has-text-centered heading is-6">
+          // by the roomee project
+          // </footer>
