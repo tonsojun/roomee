@@ -7,6 +7,8 @@ import LoginView from './loginView.jsx';
 import SignUpView from './signUpView.jsx';
 import CreateListingView from './createListingView.jsx';
 import HouseListingView from './houseListingView.jsx';
+import Home from './Home.jsx';
+import Footer from './Footer.jsx';
 
 export default class App extends React.Component {
   constructor (props) {
@@ -17,7 +19,6 @@ export default class App extends React.Component {
       currentHouseView: {},
       justRegistered: false,
       showLogin: true
-
     };
     this.onSubmitPost = this.onSubmitPost.bind(this);
     this.onSearch = this.onSearch.bind(this);
@@ -31,9 +32,10 @@ export default class App extends React.Component {
 
   componentDidMount () {
     // get request fetches the zipcode of the user's IP address and calls onEnterSite
-    axios.get('http://ip-api.com/json')
-      .then(response => this.searchByZipCode(response.data.zip))
-      .catch(err => console.log(err));
+    // axios.get('http://ip-api.com/json')
+    //   .then(response => this.searchByZipCode(response.data.zip))
+    //   .catch(err => console.log(err));
+
   }
 
   onInput (e) {
@@ -110,21 +112,11 @@ export default class App extends React.Component {
         onSearch={this.onSearch}
         onTitleClick={this.onTitleClick}
       />);
-    const Home = () => (
-      <section className="hero is-medium is-primary">
-        <div className="hero-body">
-          <h1 className="title is-1">
-          Welcome to Roomee
-          </h1>
-          <h2 className="subtitle is-2">
-          We're not craigslist.
-          </h2>
-        </div>
-      </section>
+    const renderHome = props => (
+       <Home  />
     );
 
     return (
-
       <Router>
         <div className="hero">
           <h1 className="level-item title has-text-centered is-medium">
@@ -151,16 +143,15 @@ export default class App extends React.Component {
             </Link>
           </nav>
 
-          <Route exact path="/" component={Home} />
+          {/* define root */}
+          <Route exact path="/" component={renderHome} />
           <Route path="/search" render={renderSearchView} />
           <Route path="/createListing" render={renderCreateListingView} />
           <Route path="/loginView" render={renderLoginView} />
           <Route path="/signUpView" render={renderSignUpView} />
           <Route path="/house" render={renderHouseListingView} />
 
-          <footer className="footer has-text-centered heading is-6">
-          by the roomee project
-          </footer>
+          <Footer />
         </div>
       </Router>
     );

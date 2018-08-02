@@ -56,6 +56,8 @@ app.get('/searchListing', (req, res) => {
   });
 });
 
+// random query -- 8 most rate 
+
 app.post('/listing', isLoggedIn, (req, res) => {
   console.log(`post to listing ========current user is >>${req.user}<< and this user authentication is >>${req.isAuthenticated()}<< ============`)
 
@@ -81,7 +83,7 @@ app.get('/loginView', (req, res) => {
 
 
 app.get('/house', (req, res) => {
-  //res.render('loginView');
+  // res.render('loginView');
   res.redirect('localhost:3000/house');
 });
 
@@ -147,13 +149,12 @@ app.post('/login', (req, res) => {
 
 app.get('/', function(req, res) {
   console.log(`HOME SCREEN ========current user is >>${req.user}<< and this user authentication is >>${req.isAuthenticated()}<< ============`)
-  res.render('home', {title: 'Roomee change the title'});
+  res.render('home', {title: 'Roomee'});
 });
 
 passport.serializeUser(function(userid, done) {
   done(null, userid);
 });
-
 passport.deserializeUser(function(userid, done) {
   done(null, userid);
 })
