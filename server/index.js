@@ -44,12 +44,9 @@ app.get('/', (req, res, next) => {
 
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
-const isLoggedIn = (req, res, next) =>
-  req.isAuthenticated() ? next() : res.sendStatus(401);
-
 app.get('/searchListing', (req, res) => {
-  console.log(`get to searchlisting ========current user is >>${req.user}<< and this user authentication is >>${req.isAuthenticated()}<< ============`);
-
+  // console.log(`get to searchlisting ========current user is >>${req.user}<< and this user authentication is >>${req.isAuthenticated()}<< ============`);
+  
   let zip = req.param('zip');
   if (zip !== undefined) { zip = zip.substr(0, 3) + '__'; }
   const queryStr = zip ? { where: { zipCode: { $like: zip } } } : {};
@@ -62,41 +59,57 @@ app.get('/searchListing', (req, res) => {
   });
 });
 
-app.post('/listing', isLoggedIn, (req, res) => {
-  console.log(`post to listing ========current user is >>${req.user}<< and this user authentication is >>${req.isAuthenticated()}<< ============`)
+//ED: DIABLED SESSION FOR SERVER TESTING
+// const isLoggedIn = (req, res, next) =>
+//   req.isAuthenticated() ? next() : res.sendStatus(401);
+//ED: add this middle ware to post route for /listing:
+//app.post('/listing', isLoggedIn, (req, res) => {
 
+app.post('/listing', (req, res) => {
+  // console.log(`post to listing ========current user is >>${req.user}<< and this user authentication is >>${req.isAuthenticated()}<< ============`)
+  // console.log(req.body);
+  req.body.price = req.body.price || null;
   db.Listing.createListing(req.body, (err, result) => {
     if (err) {
-      res.sendStatus(500);
+      res.sendStatus(err);
     } else {
+      // console.log(result);
       res.send(result);
     }
   });
 });
 
 // handlers for refresh button on all views
-// res.redirect('back') will take user back to homepage
-app.get('/createListing', (req, res) => {
-  res.redirect('localhost:3000/createListing');
-});
+// // res.redirect('back') will take user back to homepage
+// app.get('/createListing', (req, res) => {
+//   res.redirect('localhost:3000/createListing');
+// });
 
-app.get('/loginView', (req, res) => {
-  // res.render('loginView');
-  res.redirect('localhost:3000/loginView');
-});
+// app.get('/loginView', (req, res) => {
+//   // res.render('loginView');
+//   res.redirect('localhost:3000/loginView');
+// });
 
+<<<<<<< HEAD
 app.get('/house', (req, res) => {
   // res.render('loginView');
   res.redirect('localhost:3000/house');
 });
+=======
 
-app.get('/search', (req, res) => {
-  // res.render('searchView');
-  res.redirect('localhost:3000/search');
-});
+// app.get('/house', (req, res) => {
+//   // res.render('loginView');
+//   res.redirect('localhost:3000/house');
+// });
+>>>>>>> server edits
 
-app.get('/signup', (req, res) => res.render('signup'));
-app.get('/loginView', (req, res) => res.render('login'));
+// app.get('/search', (req, res) => {
+//   // res.render('searchView');
+//   res.redirect('localhost:3000/search');
+// });
+
+// app.get('/signup', (req, res) => res.render('signup'));
+// app.get('/loginView', (req, res) => res.render('login'));
 
 app.get('/logout', (req, res) => {
 req.session.destroy(function() {

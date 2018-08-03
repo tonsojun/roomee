@@ -48,21 +48,20 @@ const FBUser = db.define('fbuser', {
 
 const Listing = db.define('listing', {
   id: {
-    allowNull: false,
     autoIncrement: true,
     primaryKey: true,
     type: Sequelize.INTEGER
   },
-  title: { type: Sequelize.STRING },
-  address: { type: Sequelize.STRING },
-  address2: { type: Sequelize.STRING },
-  city: { type: Sequelize.STRING },
-  stateAbbr: { type: Sequelize.STRING },
-  zipCode: { type: Sequelize.STRING },
-  lat: { type: Sequelize.DECIMAL(9, 6) },
-  lon: { type: Sequelize.DECIMAL(9, 6) },
-  description: { type: Sequelize.TEXT },
-  price: { type: Sequelize.INTEGER }
+  title: Sequelize.STRING,
+  address: Sequelize.STRING,
+  address2: Sequelize.STRING,
+  city: Sequelize.STRING,
+  stateAbbr: Sequelize.STRING,
+  zipCode: Sequelize.STRING,
+  lat: Sequelize.DECIMAL(9, 6),
+  lon: Sequelize.DECIMAL(9, 6),
+  description: Sequelize.TEXT,
+  price: Sequelize.INTEGER
 });
 
 const Photo = db.define('photo', {
@@ -91,21 +90,34 @@ Listing.findListingsByID = (id, callback) => {
 };
 
 Listing.createListing = (listing, callback) => {
+  
   Listing.create(listing)
-    .then(data => {
-      if (listing.photos.length > 0) {
-        const listingResult = data;
-        const photos = listing.photos.map(url => {
-          const p = { url, listingId: listingResult.id };
-          return p;
-        });
-        Photo.bulkCreate(photos).then(() => Listing.findListingsByID(listingResult.id, callback) );
-      } else {
-        callback(null, data);
-      }
-    })
-    .catch(err => callback(err, null));
+    .then(
+      data => 
+      // {
+      // if (listing.photos.length > 0) {
+      //   const listingResult = data;
+      //   const photos = listing.photos.map(url => {
+      //     const p = { url, listingId: listingResult.id };
+      //     return p;
+      //   });
+      //   Photo.bulkCreate(photos).then(() => Listing.findListingsByID(listingResult.id, callback) );
+      
+      // } else {
+        callback(data)
+      // }
+      // }
+    )
+    .catch(err => callback(err));
 };
+
+// var listing123 = { 
+//   title: "sdf123",
+//   address: "sdf123",
+//   city: "hi123"
+// };
+// console.log("ED WAS HERE!!!!!!!!")
+// Listing.createListing(listing123, function(err,data){console.log("HELLLLLOO",data)}) 
 
 // var generateHash = password =>bCrypt.hashSync(password, bCrypt.genSaltSync(8), null);
 

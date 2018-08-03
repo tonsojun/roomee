@@ -62,6 +62,7 @@ export default class App extends React.Component {
   }
 
   onSubmitPost (newListingData) {
+    console.log(newListingData);
     // create new house listing in db
     this.setState( { currentHouseView: newListingData } )
     // post request to server

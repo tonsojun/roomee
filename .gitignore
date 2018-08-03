@@ -4,3 +4,4 @@ database/db.config.js
 .env
 config/config.json
 .vscode
+./database/db.config.js
