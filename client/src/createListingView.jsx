@@ -43,15 +43,15 @@ class CreateListingView extends React.Component {
       const formData = new FormData();
       formData.append("file", file);
       formData.append("tags", `codeinfuse, medium, gist`);
-      // Replace the preset name with your own
+      // Replace the preset name with your own ***********
       formData.append("upload_preset", API.cloudinaryPresetName);
-      // Replace API key with your own Cloudinary key
+      // Replace API key with your own Cloudinary key  ***********
       // images are hosted on Cloudinary, you can set up your own free account
       formData.append("api_key", API.cloudinaryKey);
       formData.append("timestamp", (Date.now() / 1000) | 0);
 
-      // Make an AJAX upload request using Axios (replace Cloudinary URL below with your own)
-      return axios.post("https://api.cloudinary.com/v1_1/codeinfuse/image/upload", formData, {
+      // Make an AJAX upload request using Axios (replace Cloudinary URL below with your own) ***********
+      return axios.post(API.CloudinaryURL, formData, {
         headers: { "X-Requested-With": "XMLHttpRequest" },
       }).then(response => {
         const data = response.data;
