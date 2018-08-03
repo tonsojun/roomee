@@ -151,9 +151,10 @@ export default class App extends React.Component {
           <Route path="/signUpView" render={renderSignUpView} />
           <Route path="/house" render={renderHouseListingView} />
 
-          <Footer />
+           <Footer />
         </div>
       </Router>
+      
     );
   }
 

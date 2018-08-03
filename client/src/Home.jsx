@@ -8,7 +8,7 @@ import DetailsRoom from './DetailsRoom.jsx';
 var mostRate = {
     background:'#eee',
     textAlign:'center',
-    fontSize: '3em'
+    fontSize: '2em'
 }
 
 class Home extends React.Component  {
@@ -27,7 +27,7 @@ class Home extends React.Component  {
             url: 'http://127.0.0.1:3000/searchListing',
             success: (data) => {
               this.setState({
-                listRoom : data
+                listRoom : data.splice(0,9)
               })
             },
             error: (err) => {
@@ -35,16 +35,19 @@ class Home extends React.Component  {
             }
         });
     }
-    handleClickitem(room) {
-        console.log("The funcking room 's ",room)
+    handleClickitem (room) {
         this.setState({
           detRoom: room,
           showDetailsComponent:true
         });
-      }
-
+    }
+    closeDetailRoom () {
+        this.setState({
+            showDetailsComponent:false
+        });
+    }
     render(){
-        console.log("See my",this.state.listRoom);
+    
     return (
         <div>
             <section className="hero is-medium is-primary">
@@ -52,15 +55,19 @@ class Home extends React.Component  {
                 <h1 className="title is-1">
                 Welcome to Roomee
                 </h1>
-                    <h2 className="subtitle is-2">
-                        We're not craigslist.
-                    </h2>
+                {/* <div className="banner"> 
+                  <img src="http://www.vesaliusdesign.com/wp-content/uploads/2018/07/extraordinary-home-and-garden-furniture-22-category-banner-750x360.jpg"/>
+                </div> */}
+                <h2 className="subtitle is-2">
+                    We're not craigslist.
+                </h2>
                 </div>
            
             </section>
             <div> 
             {
-                this.state.showDetailsComponent === true  ? <DetailsRoom listing = {this.state.detRoom} />: null
+                this.state.showDetailsComponent === true  ? <DetailsRoom listing = {this.state.detRoom} 
+                closeDetailRoom={this.closeDetailRoom.bind(this) }/>: null
             }
             </div>
             

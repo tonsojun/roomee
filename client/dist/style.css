@@ -100,8 +100,22 @@ body {
 /* Julio css */ 
 
 .footerModal {
-  height: 120px;
+  height: 80px;
   box-shadow: 0px 0px 10px #ccc;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: #fff;
+
+}
+.headModal{
+  padding: 20px;
+  box-shadow:0px 0px 3px #ccc;
+  margin-bottom:50px;
+  position: fixed;
+  width: 100%; 
+  background: #fff;
+z-index: 5;
 }
 
 .footerModal .rigth {
@@ -116,10 +130,33 @@ body {
   font-size: 22px;
   font-weight: bold;
   color:#333;
-  margin-top: 35px;
+  margin-top: 30px;
 }
+
+.footerModal .rigth .book {
+  font-size: 13px;
+  width: 100px;
+  height: 30px;
+  line-height: 30px;
+  font-weight: bold;
+  color:#fff;
+  margin-top: 28px;
+  background: #336699;
+  text-align: center;
+  float: right;
+  margin-right: 40px;
+}
+
 
 .footerModal .left {
   width: 30%;
   height: 100px;
+  padding: 20px;
+  padding-top: 10px;
 }
+
+.level-itemMe {
+  margin-top: 100px;
+}
+
+/* Banner */

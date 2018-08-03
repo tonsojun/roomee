@@ -3,3 +3,4 @@ client/dist/bundle.js
 .env
 config/config.json
 .vscode
+client/dist/index.html
