@@ -4,8 +4,4 @@ database/db.config.js
 .env
 config/config.json
 .vscode
-<<<<<<< HEAD
-client/dist/index.html
-=======
 ./database/db.config.js
->>>>>>> 055210982f271a09bd74f8a3158b2d74f24b5a12

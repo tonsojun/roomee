@@ -35,8 +35,8 @@ export default class App extends React.Component {
     axios.get('http://ip-api.com/json')
       .then(response => {
         this.setState({ziptest: response.data.zip});
-        this.searchByZipCode(response.data.zip
-      )})
+        //this.searchByZipCode(response.data.zip)
+      })
       .catch(err => console.log(err));
 
     // check login status  
@@ -142,9 +142,12 @@ export default class App extends React.Component {
         onSearch={this.onSearch}
         onTitleClick={this.onTitleClick}
       />);
-    const renderHome = props => (
+      const renderUserProfileView = props => (
+        <UserProfileView/>
+      );
+      const renderHome = props => (
        <Home  />
-    );
+      );
 
     return (
       <Router>

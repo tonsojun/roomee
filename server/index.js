@@ -61,12 +61,18 @@ app.get('/searchListing', (req, res) => {
   });
 });
 
-// random query -- 8 most rate 
+//ED: DISABLED: SESSION FOR SERVER TESTING
+// const isLoggedIn = (req, res, next) =>
+//   req.isAuthenticated() ? next() : res.sendStatus(401);
+//ED: add this middle ware to post route for /listing:
+//app.post('/listing', isLoggedIn, (req, res) => {
 
-app.post('/listing', isLoggedIn, (req, res) => {
-  console.log(`post to listing ========current user is >>${req.user}<< and this user authentication is >>${req.isAuthenticated()}<< ============`)
-
-  db.Listing.createListing(req.body, (err, result) => {
+app.post('/listing', (req, res) => {
+  // console.log(`post to listing ========current user is >>${req.user}<< and this user authentication is >>${req.isAuthenticated()}<< ============`)
+  req.body.photos = req.body.photos1;
+  console.log(req.body);
+  req.body.price = req.body.price || null;
+  db.Listing.createListing2(req.body, (err, result) => {
     if (err) {
       res.sendStatus(err);
     } else {
