@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+const moment = require('moment');
 const bCrypt = require('bcrypt-nodejs');
 const db = require('./db.js');
 const Op = Sequelize.Op;
@@ -29,35 +30,67 @@ const User = db.define('user', {
   last_login: Sequelize.DATE
 });
 
-const Listing = db.define('listing', {
+const FBUser = db.define('fbuser', {
   id: {
-    allowNull: false,
     autoIncrement: true,
     primaryKey: true,
     type: Sequelize.INTEGER
   },
-  title: { type: Sequelize.STRING },
-  address: { type: Sequelize.STRING },
-  address2: { type: Sequelize.STRING },
-  city: { type: Sequelize.STRING },
-  stateAbbr: { type: Sequelize.STRING },
-  zipCode: { type: Sequelize.STRING },
-  lat: { type: Sequelize.DECIMAL(9, 6) },
-  lon: { type: Sequelize.DECIMAL(9, 6) },
-  description: { type: Sequelize.TEXT },
-  price: { type: Sequelize.INTEGER }
+  firstname: Sequelize.STRING,
+  lastname: Sequelize.STRING,
+  username: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  about: Sequelize.TEXT,
+  email: Sequelize.STRING,
+  last_login: Sequelize.DATE,
+  gender: Sequelize.STRING,
+  picture: Sequelize.STRING,
+  age: Sequelize.INTEGER,
+  birthday: {
+    type: Sequelize.DATEONLY,
+    get: function() {
+      return moment.utc(this.getDataValue('birthday'))
+                   .format('YYYY-MM-DD');
+    }
+  },
+  hometown: Sequelize.STRING,
+  location: Sequelize.STRING
+});
+
+const Listing = db.define('listing', {
+  id: {
+    autoIncrement: true,
+    primaryKey: true,
+    type: Sequelize.INTEGER
+  },
+  title: Sequelize.STRING,
+  address: Sequelize.STRING,
+  address2: Sequelize.STRING,
+  city: Sequelize.STRING,
+  stateAbbr: Sequelize.STRING,
+  zipCode: Sequelize.STRING,
+  // lat: Sequelize.DECIMAL(9, 6),
+  // lon: Sequelize.DECIMAL(9, 6),
+  description: Sequelize.TEXT,
+  price: Sequelize.INTEGER
 });
 
 const Photo = db.define('photo', {
-  title: Sequelize.STRING,
+  // title: Sequelize.STRING,
   url: Sequelize.STRING
 });
 
 // User.hasMany(Listing);
 Listing.hasMany(Photo);
 
+Listing.User = Listing.belongsTo(User);
+// Photo.Listing = Photo.belongsTo(Listing);
+
 // sequelize.sync({ force: true });
-db.sync();
+// ED: DISABLED: Database sync to create schema tables:
+// db.sync();
 
 Listing.findListingsByZip = (queryStr, callback) => {
   queryStr.include = [{ model: Photo }];
@@ -66,6 +99,15 @@ Listing.findListingsByZip = (queryStr, callback) => {
     .catch(err => callback(err, null));
 };
 
+//ED: future zipcode query refactor for 'Listing.findListingsByZip'
+// console.log(Listing.findAll({
+//   where: { zipCode: { $like: '770__' } },
+//   include: [{
+//     model: Photo, 
+//   }]
+//   }).then(data=>console.log(data)));
+
+
 Listing.findListingsByID = (id, callback) => {
   const queryStr = { where: { id }, includes: [{ model: Photo }] };
   Listing.findAll(queryStr)
@@ -73,24 +115,66 @@ Listing.findListingsByID = (id, callback) => {
     .catch(err => callback(err, null));
 };
 
-Listing.createListing = (listing, callback) => {
-  Listing.create(listing)
-    .then(data => {
-      if (listing.photos.length > 0) {
-        const listingResult = data;
-        const photos = listing.photos.map(url => {
-          const p = { url, listingId: listingResult.id };
-          return p;
-        });
-        Photo.bulkCreate(photos).then(() => Listing.findListingsByID(listingResult.id, callback) );
-      } else {
-        callback(null, data);
-      }
-    })
-    .catch(err => callback(err, null));
+//this code correctly creates instances with association between listing and photos:
+Listing.createListing2 = (listing, callback) => {
+  Listing.create(listing,{include:[Photo]}) 
 };
 
-// var generateHash = password =>bCrypt.hashSync(password, bCrypt.genSaltSync(8), null);
+// //ED TEST: for 'Listing.createListing2' function -> many photos to one relationship:
+// Listing.createListing2({
+//   title: 'this is a test123',
+//   address: 'test',
+//   address2: "TESTY",
+//   city: "TESTY",
+//   stateAbbr: "TESTY",
+//   zipCode: "TESTY",
+//   // lat: "TESTY",
+//   // lon: "TESTY",
+//   description: "TESTY",
+//   price: 444,
+//   photos: [
+//     {url: 'www.heesdfhee.com'},
+//     {url: 'www.hee33hee.com'},
+//     {url: 'www.heeh33ee.com'},
+//     {url: 'www.333.com'},
+//   ]
+// },function(ele){console.log(ele)});
+
+//old code without association between listing and photos: [DELETE this only for reference]
+Listing.createListing = (listing, callback) => {
+  
+  Listing.create(listing)
+    .then(
+      data => 
+      // {
+      // if (listing.photos.length > 0) {
+      //   const listingResult = data;
+      //   const photos = listing.photos.map(url => {
+      //     const p = { url, listingId: listingResult.id };
+      //     return p;
+      //   });
+      //   Photo.bulkCreate(photos).then(() => Listing.findListingsByID(listingResult.id, callback) );
+      
+      // } else {
+        callback(data)
+      // }
+      // }
+    )
+    .catch(err => callback(err));
+};
+//ED TEST: for 'Listing.createListing' function [old function to be deleted]
+// var test = { title: 'user favorites connected to sessions',
+//   address: '',
+//   city: '',
+//   stateAbbr: '',
+//   zipCode: '',
+//   price: '',
+//   description: '',
+//   photos: [],
+//   redirect: false 
+// }
+// Listing.createListing = (test, function(ele){console.log(ele);})
+
 
 User.findbyUsername = (username, callback) => {
   User.findOne({ where: { username } })
@@ -121,7 +205,7 @@ User.validateLogin = (username, password, callback) => {
     .catch(err => callback(err, null));
 };
 
-
 module.exports.sequelize = db;
 module.exports.Listing = Listing;
 module.exports.User = User;
+module.exports.FBUser = FBUser;

@@ -7,7 +7,11 @@ import LoginView from './loginView.jsx';
 import SignUpView from './signUpView.jsx';
 import CreateListingView from './createListingView.jsx';
 import HouseListingView from './houseListingView.jsx';
+<<<<<<< HEAD
 import Footer from './footer.jsx';
+=======
+import UserProfileView from './userProfileView.jsx'
+>>>>>>> 09b237c96541e97522a5467a2a05ccab79e9351b
 
 export default class App extends React.Component {
   constructor (props) {
@@ -16,7 +20,8 @@ export default class App extends React.Component {
       term: '',
       listings: [],
       currentHouseView: {},
-      justRegistered: false
+      justRegistered: false,
+      isLogin: false
     };
     this.onSubmitPost = this.onSubmitPost.bind(this);
     this.onSearch = this.onSearch.bind(this);
@@ -31,8 +36,20 @@ export default class App extends React.Component {
   componentDidMount () {
     // get request fetches the zipcode of the user's IP address and calls onEnterSite
     axios.get('http://ip-api.com/json')
-      .then(response => this.searchByZipCode(response.data.zip))
+      .then(response => {
+        this.setState({ziptest: response.data.zip});
+        this.searchByZipCode(response.data.zip
+      )})
       .catch(err => console.log(err));
+
+    // check login status  
+    this.getLoginUser((err, user) => {
+      if (err) {
+        console.log(err);
+      } else {
+        this.setState({isLogin: !!user});
+      }
+    })
   }
 
   onInput (e) {
@@ -63,6 +80,7 @@ export default class App extends React.Component {
   }
 
   onSubmitPost (newListingData) {
+    console.log(newListingData);
     // create new house listing in db
     this.setState( { currentHouseView: newListingData } )
     // post request to server
@@ -76,8 +94,21 @@ export default class App extends React.Component {
   searchByZipCode (zipCode) {
     // get request queries databse for all listings matching the user's ip address zipcode
     axios.get('/searchListing', { params: { zip: zipCode } })
-      .then(res => this.setState({ listings: res.data }))
-      .catch(err => console.log(err) );
+         .then(res => this.setState({ listings: res.data }))
+         .catch(err => console.log(err) );
+  }
+
+  getLoginUser(callback) {
+    axios.get('/loginUser')
+         .then((res) => callback(null, res.data))
+         .catch((err) => callback(err, null));
+  }
+
+  logout() {
+    axios.get('/logout')
+         .then((res) => axios.get('/loginUser'))
+         .then((res) => this.setState({isLogin: !!user}))
+         .catch((err) => console.log(err));
   }
 
   /*  ******** axios Requests **********/
@@ -85,23 +116,29 @@ export default class App extends React.Component {
   /* ******** Render **********/
 
   render () {
+    const {isLogin} = this.state;
+
     // passing props to views with routes
     const renderHouseListingView = props => (
       <HouseListingView
         currentHouseView={this.state.currentHouseView}
-      />);
+      />
+    );
     const renderSignUpView = props => (
       <SignUpView
         onSignUp={this.onSignUp}
-      />);
+      />
+    );
     const renderLoginView = props => (
       <LoginView
         registered={this.state.justRegistered}
-      />);
+      />
+    );
     const renderCreateListingView = props => (
       <CreateListingView
         onSubmit={this.onSubmitPost}
-      />);
+      />
+    );
     const renderSearchView = props => (
       <SearchView
         onInput={this.onInput}
@@ -109,7 +146,11 @@ export default class App extends React.Component {
         listings={this.state.listings}
         onSearch={this.onSearch}
         onTitleClick={this.onTitleClick}
-      />);
+      />
+    );
+    const renderUserProfileView = props => (
+      <UserProfileView/>
+    );
     const Home = () => (
       <section className="hero is-medium is-primary">
         <div className="hero-body">
@@ -143,12 +184,11 @@ export default class App extends React.Component {
             <Link to="/createListing" className="level-item">
             New Listing
             </Link>
-            <Link to="/loginView" className="level-item">
-            Login
-            </Link>
-            <Link to="/signUpView" className="level-item">
-            Sign Up
-            </Link>
+            {isLogin ? null : <Link to="/loginView" className="level-item">Login</Link>}
+            {isLogin ? null : <Link to="/signUpView" className="level-item">Sign Up</Link>}
+            {isLogin ? null : <a href="/login/facebook" className="level-item">LOGIN WITH FACEBOOK</a>}
+            {isLogin ? <Link to="/userProfileView" className="level-item">Profile</Link> : null}
+            {isLogin ? <a href="/logout" onClick={this.logout} className="level-item">LOGOUT</a> : null}
           </nav>
 
           <Route exact path="/" component={Home} />
@@ -157,6 +197,7 @@ export default class App extends React.Component {
           <Route path="/loginView" render={renderLoginView} />
           <Route path="/signUpView" render={renderSignUpView} />
           <Route path="/house" render={renderHouseListingView} />
+          <Route path="/userProfileView" render={renderUserProfileView} />
 
           <Footer />
         </div>
