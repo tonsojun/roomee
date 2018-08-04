@@ -7,8 +7,11 @@ import LoginView from './loginView.jsx';
 import SignUpView from './signUpView.jsx';
 import CreateListingView from './createListingView.jsx';
 import HouseListingView from './houseListingView.jsx';
+
 import Home from './Home.jsx';
-import Footer from './Footer.jsx';
+import Footer from './footer.jsx';
+
+import UserProfileView from './userProfileView.jsx'
 
 export default class App extends React.Component {
   constructor (props) {
@@ -182,7 +185,7 @@ export default class App extends React.Component {
           <Route path="/house" render={renderHouseListingView} />
           <Route path="/userProfileView" render={renderUserProfileView} />
 
-           <Footer />
+          <Footer />
         </div>
       </Router>
       
@@ -191,3 +194,7 @@ export default class App extends React.Component {
 
   /* ******** Render **********/
 }
+
+  // <footer className="footer has-text-centered heading is-6">
+  // by the roomee project
+  // </footer>
