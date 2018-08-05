@@ -7,11 +7,11 @@ import LoginView from './loginView.jsx';
 import SignUpView from './signUpView.jsx';
 import CreateListingView from './createListingView.jsx';
 import HouseListingView from './houseListingView.jsx';
-<<<<<<< HEAD
+
+import Home from './Home.jsx';
 import Footer from './footer.jsx';
-=======
+
 import UserProfileView from './userProfileView.jsx'
->>>>>>> 09b237c96541e97522a5467a2a05ccab79e9351b
 
 export default class App extends React.Component {
   constructor (props) {
@@ -21,7 +21,7 @@ export default class App extends React.Component {
       listings: [],
       currentHouseView: {},
       justRegistered: false,
-      isLogin: false
+      showLogin: true
     };
     this.onSubmitPost = this.onSubmitPost.bind(this);
     this.onSearch = this.onSearch.bind(this);
@@ -38,8 +38,8 @@ export default class App extends React.Component {
     axios.get('http://ip-api.com/json')
       .then(response => {
         this.setState({ziptest: response.data.zip});
-        this.searchByZipCode(response.data.zip
-      )})
+        //this.searchByZipCode(response.data.zip)
+      })
       .catch(err => console.log(err));
 
     // check login status  
@@ -71,7 +71,6 @@ export default class App extends React.Component {
   }
 
   /* ******** Helpers and Events **********/
-
   /*  ******** axios Requests **********/
 
   onSearch (event) {
@@ -112,7 +111,6 @@ export default class App extends React.Component {
   }
 
   /*  ******** axios Requests **********/
-
   /* ******** Render **********/
 
   render () {
@@ -132,8 +130,8 @@ export default class App extends React.Component {
     const renderLoginView = props => (
       <LoginView
         registered={this.state.justRegistered}
-      />
-    );
+      />);
+      
     const renderCreateListingView = props => (
       <CreateListingView
         onSubmit={this.onSubmitPost}
@@ -146,43 +144,30 @@ export default class App extends React.Component {
         listings={this.state.listings}
         onSearch={this.onSearch}
         onTitleClick={this.onTitleClick}
-      />
-    );
-    const renderUserProfileView = props => (
-      <UserProfileView/>
-    );
-    const Home = () => (
-      <section className="hero is-medium is-primary">
-        <div className="hero-body">
-          <h1 className="title is-1">
-          Welcome to Roomee
-          </h1>
-          <h2 className="subtitle is-2">
-          We're not craigslist.
-          </h2>
-        </div>
-      </section>
+      />);
+      const renderUserProfileView = props => (
+        <UserProfileView/>
       );
-      
-      
-      
-      
-      return (
-        <Router>
+      const renderHome = props => (
+       <Home  />
+      );
+
+    return (
+      <Router>
         <div className="hero">
           <h1 className="level-item title has-text-centered is-medium">
-          Roomee
+            Roomee
           </h1>
           {/* React router routes*/}
           <nav className="level container has-text-centered heading is-6">
             <Link to="/" className="level-item">
-            Home
+              Home
             </Link>
             <Link to="/search" className="level-item">
-            Search
+              Search
             </Link>
             <Link to="/createListing" className="level-item">
-            New Listing
+              New Listing
             </Link>
             {isLogin ? null : <Link to="/loginView" className="level-item">Login</Link>}
             {isLogin ? null : <Link to="/signUpView" className="level-item">Sign Up</Link>}
@@ -191,7 +176,8 @@ export default class App extends React.Component {
             {isLogin ? <a href="/logout" onClick={this.logout} className="level-item">LOGOUT</a> : null}
           </nav>
 
-          <Route exact path="/" component={Home} />
+          {/* define root */}
+          <Route exact path="/" component={renderHome} />
           <Route path="/search" render={renderSearchView} />
           <Route path="/createListing" render={renderCreateListingView} />
           <Route path="/loginView" render={renderLoginView} />
@@ -202,12 +188,13 @@ export default class App extends React.Component {
           <Footer />
         </div>
       </Router>
+      
     );
   }
 
   /* ******** Render **********/
 }
 
-          // <footer className="footer has-text-centered heading is-6">
-          // by the roomee project
-          // </footer>
+  // <footer className="footer has-text-centered heading is-6">
+  // by the roomee project
+  // </footer>

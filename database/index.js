@@ -29,7 +29,6 @@ const User = db.define('user', {
   },
   last_login: Sequelize.DATE
 });
-
 const FBUser = db.define('fbuser', {
   id: {
     autoIncrement: true,
@@ -90,7 +89,7 @@ Listing.User = Listing.belongsTo(User);
 
 // sequelize.sync({ force: true });
 // ED: DISABLED: Database sync to create schema tables:
-// db.sync();
+ db.sync();
 
 Listing.findListingsByZip = (queryStr, callback) => {
   queryStr.include = [{ model: Photo }];
