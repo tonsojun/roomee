@@ -3,7 +3,7 @@ import Dropzone from 'react-dropzone';
 
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
-import SearchResultView from './searchResultView.jsx';
+import RoomsSearchResultView from './RoomsSearchResultView.jsx';
 
 class UserProfileView extends React.Component {
   constructor(props) {
@@ -130,7 +130,8 @@ class UserProfileView extends React.Component {
             </h4>
             {!this.state.userListing.length ? <div className="has-text-centered title is-4">Sorry, no results found in this area</div> :
                 this.state.userListing.map((item) =>
-                <SearchResultView
+                <RoomsSearchResultView
+              
                   onTitleClick={this.props.onTitleClick}
                   listing={item}
                   key={item.id}
